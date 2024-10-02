@@ -1,14 +1,20 @@
-// Import a module
-const http = require('http')
+const express = require('express') // demande le framework express
+const router = express.Router() // créer une nouvel objet routeur à partir du framework express 
 
-// Declare an http server
-http.createServer(function (req, res) {
+// middleware that is specific to this router
+const timeLog = (req, res, next) => {
+  console.log('Time: ', Date.now())
+  next()
+}
+router.use(timeLog)
 
-    // Write a response header
-    res.writeHead(200, {'Content-Type': 'text/plain'});
+// define the home page route
+router.get('/', (req, res) => { // méthode pour obtenir les users --> le nom de la page 
+  res.send('Birds home page')
+})
+// define the about route
+router.get('/about', (req, res) => { // informations 
+  res.send('About birds')
+})
 
-    // Write a response content
-    res.end('Hello World\n');
-
-// Start the server
-}).listen(8080)
+module.exports = router
