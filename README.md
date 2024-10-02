@@ -1,6 +1,6 @@
 # Webtech 210_FR
 
-**Début de projet en Septembre 2024**
+**Début de projet : Septembre 2024**
 
 ## Contributeurs
 
@@ -9,17 +9,18 @@
 
 ## Détails du projet
 
-Faire un projet en langage JavaScript, HTML, CSS
+Réalisation d'un projet en langage JavaScript, HTML, et CSS.
+
 ## Modifications appliquées
 
 ### Suppression de `node_modules` de la gestion de version
 
 Les étapes suivantes ont été suivies pour retirer le dossier `node_modules` du suivi Git, tout en continuant à l'ignorer dans le futur :
 
-1. **Retirer `node_modules` de l'index Git** :
+1. **Retirer `node_modules` de l'index Git et ajouter les modifications** :
    ```bash
    git rm -r --cached node_modules
-
-2. **Ajouter des modifications**
-   git add . 
+   git add .
+   git commit -m "Message"
+   git push main <branch>
 
