@@ -19,14 +19,7 @@ Les étapes suivantes ont été suivies pour retirer le dossier `node_modules` d
 1. **Retirer `node_modules` de l'index Git** :
    ```bash
    git rm -r --cached node_modules
-'''
 
-2. **Pour ajouter les modifications**
-   '''bash
-   git add .
-'''
-3. **Pour tout mettre sur notre dépôt GitHub**
-   '''bash 
-   git commit -m "Message"
-   git push origin main
-'''
+2. **Ajouter des modifications**
+   git add . 
+
