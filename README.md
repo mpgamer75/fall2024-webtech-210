@@ -1,4 +1,4 @@
-# Webtech 210
+# Webtech 210_FR
 
 **Début de projet en Septembre 2024**
 
@@ -9,8 +9,7 @@
 
 ## Détails du projet
 
-Ce projet a pour objectif de [décrire l'objectif du projet ici, par exemple : développer une application web, créer un site de gestion d'offres d'emploi, etc.].
-
+Faire un projet en langage JavaScript, HTML, CSS
 ## Modifications appliquées
 
 ### Suppression de `node_modules` de la gestion de version
@@ -20,4 +19,14 @@ Les étapes suivantes ont été suivies pour retirer le dossier `node_modules` d
 1. **Retirer `node_modules` de l'index Git** :
    ```bash
    git rm -r --cached node_modules
+'''
 
+2. **Pour ajouter les modifications**
+   '''bash
+   git add .
+'''
+3. **Pour tout mettre sur notre dépôt GitHub**
+   '''bash 
+   git commit -m "Message"
+   git push origin main
+'''
