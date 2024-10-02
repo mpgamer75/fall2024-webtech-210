@@ -7,4 +7,4 @@
 /dataSources/
 /dataSources.local.xm
 
-node_modules/
+/node_modules/
