@@ -24,7 +24,8 @@ Les étapes suivantes ont été suivies pour retirer le dossier `node_modules` d
    git commit -m "Message"
    git push main <branch>
 
-## Changements apportés 
+### Changements apportés 
+
   Implémentation d'une API présente sur le fichier index.js 
   Supression des dossiers .idea et .DS_Store / placé dans le gitignore 
   Modification ont eu lieu dans le cadre du lab3 
