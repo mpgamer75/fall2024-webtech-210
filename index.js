@@ -1,10 +1,12 @@
-const express = require("express"); // appel le framework express
+const express = require("express");
+const app = express();
 
-const {v4: uuidv4}=require('uuid'); // pour générer des uuid --> identifiant unique pour chaque composant du site 
-const app = express(); // variable app utilise le framework express --> nous permet de l'appeler et de l'utiliser par la suite 
+app.use(express.json());
 
-app.use(express.json()); // permet à notre application d'intérpreter les paquets JSON
+const articlesRouter = require('./routes/articles');
+const commentsRouter = require('./routes/comments');
 
+<<<<<<< HEAD
 
 
 app.get('/articles',(req,res)=>{ // fonction qui permet de récuperer ( grâce à la méthode GET d'express ) les articles de la base de données 
@@ -66,4 +68,12 @@ app.get('/articles/:articleId/comments/:commentId', (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => { // on "écoute" le port 3000 
   console.log(`Server is running on port ${PORT}`);
+=======
+app.use('/articles', articlesRouter);
+app.use('/articles', commentsRouter);  // Les commentaires sont basés sur les articles
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Serveur en cours d'exécution sur le port ${PORT}`);
+>>>>>>> 301ede5bb8eee3598e3122548c4655b331912dea
 });
