@@ -6,7 +6,7 @@ app.use(express.json());
 const articlesRouter = require('./routes/articles');
 const commentsRouter = require('./routes/comments');
 
-<<<<<<< HEAD
+
 
 
 app.get('/articles',(req,res)=>{ // fonction qui permet de récuperer ( grâce à la méthode GET d'express ) les articles de la base de données 
@@ -68,7 +68,7 @@ app.get('/articles/:articleId/comments/:commentId', (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => { // on "écoute" le port 3000 
   console.log(`Server is running on port ${PORT}`);
-=======
+
 app.use('/articles', articlesRouter);
 app.use('/articles', commentsRouter);  // Les commentaires sont basés sur les articles
 
