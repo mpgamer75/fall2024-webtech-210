@@ -49,20 +49,18 @@ On peut ensuite push les modifications apporté vers le dépôt distant en suiva
   git branch -d nom-de-la-branche
 
 
-## Modules nécessaires aux projets 
+## Modules nécessaires au projet
 
-1. Node.js 
-2. Express.js
-3. React.js  
-4. UUID 
+1. **Node.js**
+2. **Express.js**
+3. **React.js**
+4. **UUID**
 
-
-## Ce qui a été modifié et ajouté :
+## Ce qui a été modifié et ajouté
 
 1. **Correction du commit pour la suppression de `node_modules`.**
 2. **Ajout d'une section expliquant comment créer une nouvelle branche et basculer dessus.**
-3. **Liste des modules nécessaires** : Node.js, Express, React, UUID
+3. **Liste des modules nécessaires** : Node.js, Express, React, UUID.
 4. **Instructions pour l'installation et l'exécution du projet.**
 
-Les modifications ont lieu en TP mais également en travaillant le projet en dehors des heures de cours 
-
+Les modifications ont lieu en TP, mais également en travaillant le projet en dehors des heures de cours.
