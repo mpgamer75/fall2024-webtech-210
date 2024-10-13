@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "private": true,
   "dependencies": {
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "chai": "^4.3.6",
     "mocha": "^10.7.3",
     "supertest": "^7.0.0"
   }
