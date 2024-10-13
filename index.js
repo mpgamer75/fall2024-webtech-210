@@ -6,27 +6,6 @@ const app = express(); // variable app utilise le framework express --> nous per
 app.use(express.json()); // permet à notre application d'intérpreter les paquets JSON
 
 
-const db = {
-  articles: [
-    {
-      id: '6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b',
-      title: 'My article',
-      content: 'Content of the article.',
-      date: '04/10/2022',
-      author: 'Liz Gringer'
-    }
-  ],
-  comments: [
-    {
-      id: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
-      timestamp: 1664835049,
-      content: 'Content of the comment.',
-      articleId: '6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b',
-      author: 'Bob McLaren'
-    }
-  ]
-};
-
 
 app.get('/articles',(req,res)=>{ // fonction qui permet de récuperer ( grâce à la méthode GET d'express ) les articles de la base de données 
   res.json(db.articles); // la réponse est donné sous forme de JSON 
@@ -51,19 +30,19 @@ app.get('/articles/:articleId', (req, res) => { // récupère les articles des c
   if (article) {
     res.json(article);
   } else {
-    res.status(404).json({ message: 'Article not found' });
+    res.status(404).json({ message: 'Article not found' }); // res.status ==> renvoie un statut HTTP ==> ici 404 veut dire non trouvé 
   }
 });
 
-app.get('/articles/:articleId/comments', (req, res) => {
+app.get('/articles/:articleId/comments', (req, res) => { // syntaxe ==> /articles ==> récupère grâce au GET les articles ==> /articles/:articleID ==> récupère les articles via leur ID 
   const articleComments = db.comments.filter(comment => comment.articleId === req.params.articleId);
   res.json(articleComments);
 });
 
-app.post('/articles/:articleId/comments', (req, res) => {
+app.post('/articles/:articleId/comments', (req, res) => { // Ici on ajoute grâce à POST des articles 
   const { content, author } = req.body;
   const newComment = {
-    id: uuidv4(),
+    id: uuidv4(), // ID uuidv4 permet de catégoriser de manière unique grâce à des identifiants des articles 
     timestamp: Date.now(),
     content,
     articleId: req.params.articleId,
@@ -85,6 +64,6 @@ app.get('/articles/:articleId/comments/:commentId', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, () => { // on "écoute" le port 3000 
   console.log(`Server is running on port ${PORT}`);
 });
