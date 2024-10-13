@@ -6,6 +6,7 @@ app.use(express.json());
 const articlesRouter = require('./routes/articles');
 const commentsRouter = require('./routes/comments');
 
+/*
 <<<<<<< HEAD
 
 
@@ -68,12 +69,14 @@ app.get('/articles/:articleId/comments/:commentId', (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => { // on "écoute" le port 3000 
   console.log(`Server is running on port ${PORT}`);
-=======
+
+*/
+
 app.use('/articles', articlesRouter);
 app.use('/articles', commentsRouter);  // Les commentaires sont basés sur les articles
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Serveur en cours d'exécution sur le port ${PORT}`);
->>>>>>> 301ede5bb8eee3598e3122548c4655b331912dea
+
 });
