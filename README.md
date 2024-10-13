@@ -21,11 +21,47 @@ Les étapes suivantes ont été suivies pour retirer le dossier `node_modules` d
    ```bash
    git rm -r --cached node_modules
    git add .
-   git commit -m "Message"
-   git push main <branch>
+   git commit -m "Suppression de node_modules du suivi Git"
+   git push origin main
 
-### Changements apportés 
+2. **Pour ajouter les `node_modules` à notre dossier** : 
+   ```bash
+   node_modules/
 
-  Implémentation d'une API présente sur le fichier index.js 
-  Supression des dossiers .idea et .DS_Store / placé dans le gitignore 
-  Modification ont eu lieu dans le cadre du lab3 
+### Création d'une nouvelle branche Git
+
+Le but ic est de pouvoir mieux travailler en groupe et d'éviter les conflits au moment de fusionner nos codes sur la branche main 
+
+1. **Création d'une nouvelle branche**
+
+   ```bash 
+   git checkout -b nom-de-la-branche
+
+On peut ensuite push les modifications apporté vers le dépôt distant en suivant les méthodes de push classique 
+
+2. **Fusionner avec la branche principale**
+  ```bash
+  git checkout main 
+  git pull origin main 
+  git merge nom-de-la-branche
+
+3. **Supprimer la branche**
+  git branch -d nom-de-la-branche
+
+
+### Modules nécessaires aux projets 
+
+1. Node.js 
+2. Express.js
+3. React.js  
+4. UUID 
+
+
+### Ce qui a été modifié et ajouté :
+1. **Correction du commit pour la suppression de `node_modules`.**
+2. **Ajout d'une section expliquant comment créer une nouvelle branche et basculer dessus.**
+3. **Liste des modules nécessaires** : Node.js, Express, React, UUID
+4. **Instructions pour l'installation et l'exécution du projet.**
+
+Les modifications ont lieu en TP mais également en travaillant le projet en dehors des heures de cours 
+
