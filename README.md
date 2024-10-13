@@ -30,7 +30,7 @@ Les étapes suivantes ont été suivies pour retirer le dossier `node_modules` d
 
 ### Création d'une nouvelle branche Git
 
-Le but ic est de pouvoir mieux travailler en groupe et d'éviter les conflits au moment de fusionner nos codes sur la branche main 
+Le but ici est de pouvoir mieux travailler en groupe et d'éviter les conflits au moment de fusionner nos codes sur la branche main 
 
 1. **Création d'une nouvelle branche**
 
@@ -49,7 +49,7 @@ On peut ensuite push les modifications apporté vers le dépôt distant en suiva
   git branch -d nom-de-la-branche
 
 
-### Modules nécessaires aux projets 
+## Modules nécessaires aux projets 
 
 1. Node.js 
 2. Express.js
@@ -57,7 +57,8 @@ On peut ensuite push les modifications apporté vers le dépôt distant en suiva
 4. UUID 
 
 
-### Ce qui a été modifié et ajouté :
+## Ce qui a été modifié et ajouté :
+
 1. **Correction du commit pour la suppression de `node_modules`.**
 2. **Ajout d'une section expliquant comment créer une nouvelle branche et basculer dessus.**
 3. **Liste des modules nécessaires** : Node.js, Express, React, UUID
