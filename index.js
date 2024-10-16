@@ -1,62 +1,69 @@
 const express = require("express");
 const app = express();
+const { v4: uuidv4 } = require('uuid'); // Importation de uuidv4 pour générer des identifiants uniques
 
 app.use(express.json());
 
 const articlesRouter = require('./routes/articles');
 const commentsRouter = require('./routes/comments');
 
+// Simulation d'une base de données
+const db = {
+  articles: [],
+  comments: []
+};
 
-/*
-
-
-
-app.get('/articles',(req,res)=>{ // fonction qui permet de récuperer ( grâce à la méthode GET d'express ) les articles de la base de données 
-  res.json(db.articles); // la réponse est donné sous forme de JSON 
+app.get('/articles', (req, res) => { 
+  // Fonction qui permet de récupérer les articles de la base de données grâce à la méthode GET
+  res.json(db.articles); // La réponse est donnée sous forme de JSON
 });
 
-
-app.post('/articles', (req, res) => {  // permet d'ajouter un nouvel article grâce à la méthode POST --> extrait les données title, content et author / génère un nouvel id via uuidv4 
+app.post('/articles', (req, res) => {
+  // Permet d'ajouter un nouvel article avec la méthode POST
   const { title, content, author } = req.body;
   const newArticle = {
-    id: uuidv4(),
+    id: uuidv4(), // Génère un nouvel id via uuidv4
     title,
     content,
     date: new Date().toLocaleDateString(),
     author
   };
   db.articles.push(newArticle);
-  res.status(201).json(newArticle); // statut HTTP qui dit qu'une ressource a été créé avec succès 
+  res.status(201).json(newArticle); // Statut HTTP qui indique que la ressource a été créée avec succès
 });
 
-app.get('/articles/:articleId', (req, res) => { // récupère les articles des clients via l'ID 
+app.get('/articles/:articleId', (req, res) => {
+  // Récupère un article via son ID
   const article = db.articles.find(article => article.id === req.params.articleId);
   if (article) {
     res.json(article);
   } else {
-    res.status(404).json({ message: 'Article not found' }); // res.status ==> renvoie un statut HTTP ==> ici 404 veut dire non trouvé 
+    res.status(404).json({ message: 'Article not found' }); // Renvoie un statut HTTP 404 si l'article n'est pas trouvé
   }
 });
 
-app.get('/articles/:articleId/comments', (req, res) => { // syntaxe ==> /articles ==> récupère grâce au GET les articles ==> /articles/:articleID ==> récupère les articles via leur ID 
+app.get('/articles/:articleId/comments', (req, res) => {
+  // Récupère les commentaires d'un article via son ID
   const articleComments = db.comments.filter(comment => comment.articleId === req.params.articleId);
   res.json(articleComments);
 });
 
-app.post('/articles/:articleId/comments', (req, res) => { // Ici on ajoute grâce à POST des articles 
+app.post('/articles/:articleId/comments', (req, res) => {
+  // Ajoute un commentaire à un article via POST
   const { content, author } = req.body;
   const newComment = {
-    id: uuidv4(), // ID uuidv4 permet de catégoriser de manière unique grâce à des identifiants des articles 
+    id: uuidv4(), // Génère un identifiant unique pour le commentaire
     timestamp: Date.now(),
     content,
     articleId: req.params.articleId,
     author
   };
   db.comments.push(newComment);
-  res.status(201).json(newComment);
+  res.status(201).json(newComment); // Renvoie le nouveau commentaire avec un statut 201
 });
 
 app.get('/articles/:articleId/comments/:commentId', (req, res) => {
+  // Récupère un commentaire spécifique via l'ID de l'article et l'ID du commentaire
   const comment = db.comments.find(
     comment => comment.id === req.params.commentId && comment.articleId === req.params.articleId
   );
@@ -68,18 +75,6 @@ app.get('/articles/:articleId/comments/:commentId', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => { // on "écoute" le port 3000 
-  console.log(`Server is running on port ${PORT}`);
-
-<<<<<<< HEAD
-*/
-
-
-app.use('/articles', articlesRouter);
-app.use('/articles', commentsRouter);  // Les commentaires sont basés sur les articles
-
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Serveur en cours d'exécution sur le port ${PORT}`);
-
+  console.log(`Server is running on port ${PORT}`);
 });
