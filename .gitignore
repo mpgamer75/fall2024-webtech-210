@@ -8,3 +8,5 @@
 /dataSources.local.xm
 
 /node_modules/
+.DS_Store
+
