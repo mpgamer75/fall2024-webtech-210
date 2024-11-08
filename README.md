@@ -30,7 +30,7 @@ yarn install
 npm run dev
 # ou
 yarn dev
-
+```
 L'application sera accessible à l'adresse : [http://localhost:3000](http://localhost:3000)
 
 ---
@@ -38,21 +38,21 @@ L'application sera accessible à l'adresse : [http://localhost:3000](http://loca
 ## Mode d'Emploi
 
 ### Crypter un message
-1. Accédez à l'onglet "Crypter".
+1. Accédez à l'onglet **Crypter**.
 2. Entrez votre message dans le champ de texte.
 3. Choisissez une clé de cryptage.
-4. Cliquez sur le bouton "Crypter".
+4. Cliquez sur le bouton **Crypter**.
 5. Copiez le message crypté ou partagez-le directement.
 
 ### Décrypter un message
-1. Accédez à l'onglet "Décrypter".
-2. Collez le message crypté.
+1. Accédez à l'onglet **Décrypter**.
+2. Collez le message crypté dans le champ de texte.
 3. Entrez la clé de décryptage.
-4. Cliquez sur "Décrypter".
+4. Cliquez sur le bouton **Décrypter**.
 5. Visualisez le message original.
 
 ### Paramètres
-- Basculez entre le mode clair et sombre dans l'onglet "Paramètres".
+- Basculez entre le mode clair et sombre dans l'onglet **Paramètres**.
 - Personnalisez vos préférences d'affichage.
 - Accédez à l'historique des messages (si activé).
 
@@ -69,3 +69,4 @@ L'application sera accessible à l'adresse : [http://localhost:3000](http://loca
 Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
 **Développé dans le cadre du cours WebTech**
+
