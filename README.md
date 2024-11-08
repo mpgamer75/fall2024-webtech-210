@@ -1,66 +1,73 @@
-# Webtech 210_FR
+Crypto App - Application de Cryptage de Messages
+Début du projet : Novembre 2024
+Description
+Application web permettant de crypter et décrypter des messages de manière sécurisée. Elle offre une interface utilisateur intuitive avec un mode sombre/clair et permet de partager facilement les messages cryptés.
+Contributeurs
 
-**Début de projet : Septembre 2024**
+Charles Lantigua Jorge - charleslantiguajorge@gmail.com
+Emmanuel Junior NGANSOM SILEU - emmanueljunior.ngansomsileu@edu.ece.fr
 
-## Contributeurs
+Technologies Utilisées
 
-- Charles Lantigua Jorge - charleslantiguajorge@gmail.com
-- Emmanuel Junior NGANSOM SILEU - emmanueljunior.ngansomsileu@edu.ece.fr
+Frontend: Next.js 14
+Styles: Tailwind CSS
+État: React Context
+UI/UX: Interface adaptative (responsive)
+Thème: Mode sombre/clair
 
-## Détails du projet
+Prérequis
 
-Réalisation d'un projet en langage JavaScript, HTML, et CSS.
+Node.js (version 18.0.0 ou supérieure)
+npm ou yarn
+Un navigateur web moderne
 
-## Modifications appliquées
+Installation et Lancement
+bashCopy# Cloner le projet
+git clone https://github.com/votre-username/fall2024-webtech-210.git
 
-### Suppression de `node_modules` de la gestion de version
+# Accéder au dossier
+cd fall2024-webtech-210/app-cryptage
 
-Les étapes suivantes ont été suivies pour retirer le dossier `node_modules` du suivi Git, tout en continuant à l'ignorer dans le futur :
+# Installer les dépendances
+npm install
+# ou
+yarn install
 
-1. **Retirer `node_modules` de l'index Git et ajouter les modifications** :
-   ```bash
-   git rm -r --cached node_modules
-   git add .
-   git commit -m "Suppression de node_modules du suivi Git"
-   git push origin main
+# Lancer l'application en mode développement
+npm run dev
+# ou
+yarn dev
+L'application sera accessible à l'adresse : http://localhost:3000
+Mode d'Emploi
+Crypter un message
 
-2. **Pour ajouter les `node_modules` à notre dossier** : 
-   ```bash
-   node_modules/
+Accédez à l'onglet "Crypter"
+Entrez votre message dans le champ de texte
+Choisissez une clé de cryptage
+Cliquez sur le bouton "Crypter"
+Copiez le message crypté ou partagez-le directement
 
-### Création d'une nouvelle branche Git
+Décrypter un message
 
-Le but ici est de pouvoir mieux travailler en groupe et d'éviter les conflits au moment de fusionner nos codes sur la branche main 
+Accédez à l'onglet "Décrypter"
+Collez le message crypté
+Entrez la clé de décryptage
+Cliquez sur "Décrypter"
+Visualisez le message original
 
-1. **Création d'une nouvelle branche**
+Paramètres
 
-   ```bash 
-   git checkout -b nom-de-la-branche
+Vous pouvez basculer entre le mode clair et sombre dans l'onglet "Paramètres"
+Personnalisez vos préférences d'affichage
+Accédez à l'historique des messages (si activé)
 
-On peut ensuite push les modifications apporté vers le dépôt distant en suivant les méthodes de push classique 
+Liens Utiles
 
-2. **Fusionner avec la branche principale**
-  ```bash
-  git checkout main 
-  git pull origin main 
-  git merge nom-de-la-branche
+Documentation Next.js
+Documentation Tailwind CSS
+Guide de Cryptographie
 
-3. **Supprimer la branche**
-  git branch -d nom-de-la-branche
+Licence
+Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
 
-
-## Modules nécessaires au projet
-
-1. **Node.js**
-2. **Express.js**
-3. **React.js**
-4. **UUID**
-
-## Ce qui a été modifié et ajouté
-
-1. **Correction du commit pour la suppression de `node_modules`.**
-2. **Ajout d'une section expliquant comment créer une nouvelle branche et basculer dessus.**
-3. **Liste des modules nécessaires** : Node.js, Express, React, UUID.
-4. **Instructions pour l'installation et l'exécution du projet.**
-
-Les modifications ont lieu en TP, mais également en travaillant le projet en dehors des heures de cours.
+Développé dans le cadre du cours WebTech
