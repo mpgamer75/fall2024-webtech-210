@@ -13,7 +13,7 @@ const FileUploadButton =({onFileSelect, acceptTypes = ".txt,.pdf"})=>{
               // Gérer le PDF
               handlePDFFile(e.target.result);
             } else {
-              // Gérer le texte
+              // Gére le texte
               onFileSelect(e.target.result);
             }
           };

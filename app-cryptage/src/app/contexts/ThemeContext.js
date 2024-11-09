@@ -32,7 +32,7 @@ export const ThemeProvider = ({ children }) => {
     document.documentElement.className = newTheme;
   };
 
-  // Éviter le flash en ne rendant pas le contenu tant que le thème n'est pas chargé
+  // Évitr le flash en ne rendant pas le contenu tant que le thème n'est pas chargé
   if (!mounted) {
     return null;
   }

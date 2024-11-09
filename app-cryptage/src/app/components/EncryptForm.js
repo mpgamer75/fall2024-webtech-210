@@ -48,7 +48,7 @@ const EncryptForm = () => {
     if (!validateForm()) return;
 
     try {
-      // Méthode de cryptage simple (à remplacer par une méthode plus sécurisée)
+      // Méthode de cryptage simple ( on va la remplacer avec une méthode comme RSA ou AES qui sont plus robuste mais nécessite Crypto.js)
       const encrypted = btoa(formData.text);
       setEncryptedText(encrypted);
       setShowResult(true);
@@ -80,7 +80,7 @@ const EncryptForm = () => {
     URL.revokeObjectURL(url);
   };
 
-  // [Le reste du code reste le même, à partir du return...]
+
 
   return (
     <div className="max-w-2xl mx-auto p-6">
