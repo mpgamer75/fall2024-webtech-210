@@ -1,19 +1,26 @@
 // src/components/Logo.js
 import Image from 'next/image';
 
-const Logo = () => {
+const Logo = ({ size = 'small' }) => {
+  const dimensions = size === 'large' ? { width: 120, height: 120 } : { width: 40, height: 40 };
+  
   return (
-    <div className="flex items-center space-x-2">
+    <div className={`
+      flex ${size === 'large' ? 'flex-col' : 'items-center space-x-2'}
+      ${size === 'large' ? 'animate-scale-in' : 'animate-slide-in'}
+    `}>
       <Image
-        src="/logo-app3.png" // lien logo
+        src="/logo-app3.png"
         alt="SABER"
-        width={40}
-        height={40}
-        className="dark:invert" // Inverse les couleurs en cas d'activation du mode sombre
+        {...dimensions}
+        className="object-contain transform transition-transform duration-300 hover:scale-105"
+        priority
       />
-      <span className="font-bold text-xl text-white-800 dark:text-white">
-        SABER
-      </span>
+      {size === 'small' && (
+        <span className="font-bold text-xl text-white">
+          SABER
+        </span>
+      )}
     </div>
   );
 };
