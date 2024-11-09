@@ -1,21 +1,24 @@
-/* src/app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Ajoutez ces styles pour une transition en douceur */
-body {
-  transition: background-color 0.3s ease;
+/* Amélioration des transitions */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
-/* Styles par défaut pour le mode clair */
+/* Définition des couleurs de base */
 :root {
   --background: 255, 255, 255;
-  --text: 0, 0, 0;
+  --foreground: 0, 0, 0;
 }
 
-/* Styles pour le mode sombre */
+/* Couleurs pour le mode sombre */
 :root[class~="dark"] {
   --background: 17, 24, 39;
-  --text: 255, 255, 255;
+  --foreground: 255, 255, 255;
+}
+
+body {
+  min-height: 100vh;
 }

@@ -2,12 +2,21 @@
 module.exports = {
   darkMode: 'class',
   content: [
-    './src/pages/**/*.{js,jsx}',
-    './src/components/**/*.{js,jsx}',
-    './src/app/**/*.{js,jsx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      transitionProperty: {
+        'colors': 'background-color, border-color, color, fill, stroke',
+      },
+      transitionDuration: {
+        '300': '300ms',
+      },
+      transitionTimingFunction: {
+        'ease': 'ease',
+      },
+    },
   },
   plugins: [],
 }
