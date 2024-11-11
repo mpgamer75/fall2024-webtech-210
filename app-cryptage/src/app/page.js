@@ -1,15 +1,11 @@
 'use client';
 
 import Logo from './components/Logo';
+
 import { 
   Mail, 
   Phone, 
   MapPin, 
-  Facebook, 
-  Twitter, 
-  Instagram, 
-  Linkedin, 
-  Github, 
   Search, 
   Settings, 
   Home as HomeIcon, 
@@ -17,6 +13,16 @@ import {
   Unlock, 
   BookOpen 
 } from 'lucide-react';
+
+import { 
+  FaFacebookF, 
+  FaInstagram, 
+  FaLinkedinIn, 
+  FaGithub 
+} from 'react-icons/fa';
+
+import {RiTwitterXFill} from 'react-icons/ri';
+
 
 export default function HomePage() {
   return (
@@ -225,19 +231,19 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold mb-4 text-white">Suivez-nous</h3>
               <div className="flex space-x-4">
                 <a href="#" className="hover:text-white transition-colors duration-300">
-                  <Facebook size={24} />
+                  <FaFacebookF size={24} />
                 </a>
                 <a href="#" className="hover:text-white transition-colors duration-300">
-                  <Twitter size={24} />
+                  <RiTwitterXFill size={24} />
                 </a>
                 <a href="#" className="hover:text-white transition-colors duration-300">
-                  <Instagram size={24} />
+                  <FaInstagram size={24} />
                 </a>
                 <a href="#" className="hover:text-white transition-colors duration-300">
-                  <Linkedin size={24} />
+                  <FaLinkedinIn size={24} />
                 </a>
                 <a href="#" className="hover:text-white transition-colors duration-300">
-                  <Github size={24} />
+                  <FaGithub size={24} />
                 </a>
               </div>
               <div className="mt-6">
