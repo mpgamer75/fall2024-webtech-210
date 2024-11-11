@@ -21,7 +21,7 @@ import {
   FaGithub 
 } from 'react-icons/fa';
 
-import {RiTwitterXFill} from 'react-icons/ri';
+import {RiTwitterXFill} from 'react-icons/ri'; // import d'une bibliothèque/ package différent du react-icons/fa6 pour importer le vrai logo de Twitter ( X )  
 
 
 export default function HomePage() {
@@ -52,7 +52,7 @@ export default function HomePage() {
                        transform transition-all duration-300 hover:scale-105 
                        hover:text-red-800 dark:hover:text-red-400 cursor-default
                        hover:drop-shadow-[0_2px_1px_rgba(0,0,0,0.3)]">
-                 Avec nous, vos documents ne risquent rien
+                 Avec nous, vos documents ne risquent rien.
             </div>
 
             {/* Cards section */}

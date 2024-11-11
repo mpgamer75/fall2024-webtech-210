@@ -2,6 +2,8 @@
 
 import { Upload } from "lucide-react";
 
+ // on définit d'abord les fonctions que l'on utilisera plus tard dans le code 
+ 
 const FileUploadButton =({onFileSelect, acceptTypes = ".txt,.pdf"})=>{
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -10,15 +12,15 @@ const FileUploadButton =({onFileSelect, acceptTypes = ".txt,.pdf"})=>{
           
           reader.onload = (e) => {
             if (file.type === 'application/pdf') {
-              // Gérer le PDF
+              // Gére les documents sous format PDF
               handlePDFFile(e.target.result);
             } else {
-              // Gére le texte
+              // Gére les documents sous format .txt 
               onFileSelect(e.target.result);
             }
           };
     
-          if (file.type === 'application/pdf') {
+          if (file.type === 'application/pdf') { // vérification du type de document
             reader.readAsArrayBuffer(file);
           } else {
             reader.readAsText(file);

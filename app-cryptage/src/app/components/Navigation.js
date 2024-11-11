@@ -63,7 +63,7 @@ const Navigation = () => {
               ))}
             </div>
 
-            {/* Search and Settings */}
+            {/* Barre de recherche et settings */}
             <div className="flex items-center space-x-4">
               <div className="relative hidden lg:block">
                 <input
@@ -99,7 +99,7 @@ const Navigation = () => {
                 <a
                   key={href}
                   href={href}
-                  className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-red-800 block"
+                  className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-red-800"
                 >
                   <Icon size={20} />
                   <span>{text}</span>
@@ -115,7 +115,7 @@ const Navigation = () => {
               </div>
               <a
                 href="/settings"
-                className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-red-800 block mt-3"
+                className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-red-800 mt-3"
               >
                 <Settings size={20} />
                 <span>Paramètres</span>
