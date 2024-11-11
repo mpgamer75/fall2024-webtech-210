@@ -206,16 +206,16 @@ export default function HomePage() {
               <ul className="space-y-3">
                 <li className="flex items-center">
                   <Mail size={18} className="mr-2" />
-                  <a href="mailto:contact@saber.com" 
+                  <a href="mailto:charleslantiguajorge@gmail.com" 
                      className="hover:text-white transition-colors duration-300">
-                    contact@saber.com
+                    charleslantiguajorge@gmail.com
                   </a>
                 </li>
                 <li className="flex items-center">
                   <Phone size={18} className="mr-2" />
                   <a href="tel:+33123456789"
                      className="hover:text-white transition-colors duration-300">
-                    +33 1 23 45 67 89
+                    +33 7 67 80 40 34
                   </a>
                 </li>
                 <li className="flex items-center">
@@ -226,26 +226,27 @@ export default function HomePage() {
             </div>
             
             
-            {/* Réseaux sociaux */} 
+            {/* Réseaux sociaux avec connexion sécuriser */} 
             <div>
               <h3 className="text-lg font-semibold mb-4 text-white">Suivez-nous</h3>
               <div className="flex space-x-4">
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a href="https://www.facebook.com" target='_blank' rel='noopener noreferrer' className="hover:text-white transition-colors duration-300">
                   <FaFacebookF size={24} />
                 </a>
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a href="https://twitter.com" target='_blank' rel='noopener noreferrer'   className="hover:text-white transition-colors duration-300">
                   <RiTwitterXFill size={24} />
                 </a>
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a href="https://www.instagram.com/charles.ltgj" target='_blank' rel='noopener noreferrer' className="hover:text-white transition-colors duration-300">
                   <FaInstagram size={24} />
                 </a>
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a href="https://www.linkedin.com/in/charles-lantigua-jorge-2b63132a4" target='_blank' rel='noopener noreferrer' className="hover:text-white transition-colors duration-300">
                   <FaLinkedinIn size={24} />
                 </a>
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a href="https://github.com/mpgamer75" target='_blank' rel='noopener noreferrer' className="hover:text-white transition-colors duration-300">
                   <FaGithub size={24} />
                 </a>
               </div>
+
               <div className="mt-6">
                 <h4 className="text-sm font-semibold mb-2 text-white">Newsletter</h4>
                 <div className="flex">
@@ -268,14 +269,15 @@ export default function HomePage() {
               <div>
                 © {new Date().getFullYear()} SABER. Tous droits réservés.
               </div>
-              <div className="flex space-x-4">
-                <a href="/privacy" className="hover:text-white transition-colors duration-300">
+              <div className="flex space-x-4"> 
+              {/*dans cette partie on développe les liens pour accéder à ces pages que l'on développe => page à créer dans app/page_à_créer / pour que que lorsque l'on clique sur le lien on nous redirige vers la page dédié */}
+                <a href="./privacy" className="hover:text-white transition-colors duration-300">
                   Politique de confidentialité
                 </a>
-                <a href="/terms" className="hover:text-white transition-colors duration-300">
+                <a href="./terms" className="hover:text-white transition-colors duration-300">
                   Conditions d'utilisation
                 </a>
-                <a href="/legal" className="hover:text-white transition-colors duration-300">
+                <a href="./legal" className="hover:text-white transition-colors duration-300">
                   Mentions légales
                 </a>
               </div>
