@@ -139,7 +139,7 @@ export default function HomePage() {
             </p>
             <div className="flex justify-center space-x-4">
               <a
-                href="/register"
+                href="/encrypt"
                 className="bg-red-800 text-white px-8 py-3 rounded-md hover:bg-red-700 
                          transition-all duration-300 transform hover:scale-105"
               >

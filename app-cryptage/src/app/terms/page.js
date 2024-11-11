@@ -10,7 +10,7 @@ export default function Terms(){
                 <p className="text-xl font-serif text-white">Comment utiliser SABER</p>
 
                 <section className="mb-12 bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
-                    <h2 className="text-2xl font-semibold mb-4 text-red-800 dark:text-red-400">Crypter et décrypter vos documents en toute sécurité (ne crypter rien d'ilégale ok, on le saura :D)</h2>
+                    <h2 className="text-2xl font-semibold mb-4 text-red-800 dark:text-red-400">Crypter et décrypter vos documents en toute sécurité (ne crypter rien d'illégale ok, on le saura :D)</h2>
                     <p className="text-small font-sans-serif text-white">(c'est faux on dira rien ;)  )</p>
                 </section>
 
