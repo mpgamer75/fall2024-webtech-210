@@ -31,7 +31,7 @@ npm run dev
 # ou
 yarn dev
 ```
-L'application sera accessible à l'adresse : [http://localhost:3000](http://localhost:3000)
+L'application sera accessible à l'adresse : [http://fall2024-webtech-210-saber1.vercel.app](http://fall2024-webtech-210-saber1.vercel.app)
 
 ---
 
