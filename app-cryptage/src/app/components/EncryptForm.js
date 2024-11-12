@@ -303,6 +303,7 @@ const EncryptForm = () => {
               text-white
             `}
           >
+          {/*Les {isLoading} permettent de gérer les actions multiples ( sans ça, les utilisateurs ne sauraient pas qu'une action est en cours, ils pourraient modifier les actions alors q'une action est en cours ou cliquer plusieurs fois sur un bouton) */}
             {isLoading ? (
               <span>Chiffrement en cours...</span>
             ) : (
