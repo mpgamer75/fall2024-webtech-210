@@ -4,7 +4,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext({
-  theme: 'light',
+  theme: 'light', // créer un contexte, si on veut commencer avec un theme sombre on change 
   toggleTheme: () => {}
 });
 
@@ -19,7 +19,7 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     setMounted(true);
-    // Appliquer le thème initial
+    // Applique le thème initial
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
     document.documentElement.className = savedTheme;

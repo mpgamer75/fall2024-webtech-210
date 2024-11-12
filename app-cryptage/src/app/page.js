@@ -1,11 +1,10 @@
 'use client';
 
 import Logo from './components/Logo';
-
 import { 
   Mail, 
   Phone, 
-  MapPin, 
+  MapPin,
   Search, 
   Settings, 
   Home as HomeIcon, 
@@ -21,8 +20,7 @@ import {
   FaGithub 
 } from 'react-icons/fa';
 
-import {RiTwitterXFill} from 'react-icons/ri'; // import d'une bibliothèque/ package différent du react-icons/fa6 pour importer le vrai logo de Twitter ( X )  
-
+import { RiTwitterXFill } from 'react-icons/ri';
 
 export default function HomePage() {
   return (
@@ -37,27 +35,27 @@ export default function HomePage() {
                 <Logo size="large" />
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold 
-                         bg-gradient-to-r from-red-800 to-white 
-                         bg-clip-text text-transparent transform transition-all duration-300 
-                         hover:tracking-wider hover:scale-105 cursor-pointer
-                         drop-shadow-[0_2px_1px_rgba(0,0,0,0.3)]
-                         animate-scale-in delay-200">
+                            bg-gradient-to-r from-red-800 to-white 
+                            bg-clip-text text-transparent transform transition-all duration-300 
+                            hover:tracking-wider hover:scale-105 cursor-pointer
+                            drop-shadow-[0_2px_1px_rgba(0,0,0,0.3)]
+                            animate-scale-in delay-200">
                 SABER
               </h1>
             </div>
 
             <div className="text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 
-                       mb-8 sm:mb-12 animate-fade-in delay-300
-                       max-w-2xl mx-auto
-                       transform transition-all duration-300 hover:scale-105 
-                       hover:text-red-800 dark:hover:text-red-400 cursor-default
-                       hover:drop-shadow-[0_2px_1px_rgba(0,0,0,0.3)]">
-                 Avec nous, vos documents ne risquent rien.
+                           mb-8 sm:mb-12 animate-fade-in delay-300
+                           max-w-2xl mx-auto
+                           transform transition-all duration-300 hover:scale-105 
+                           hover:text-red-800 dark:hover:text-red-400 cursor-default
+                           hover:drop-shadow-[0_2px_1px_rgba(0,0,0,0.3)]">
+              Avec nous, vos documents ne risquent rien.
             </div>
 
             {/* Cards section */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mt-8 sm:mt-12 lg:mt-16
-                       max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-8 mt-8 sm:mt-12 lg:mt-16
+                           max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               {[
                 {
                   title: "Cryptage Avancé",
@@ -76,27 +74,41 @@ export default function HomePage() {
                   description: "Vos données restent privées",
                   icon: "🛡️",
                   delay: "delay-400"
+                },
+                {
+                  title: "Partage Sécurisé",
+                  description: "Partagez vos documents cryptés en toute sécurité",
+                  icon: "🔄",
+                  delay: "delay-500"
+                },
+                {
+                  title: "Multi-Langues",
+                  description: "Français, English, Español",
+                  icon: "🌍",
+                  delay: "delay-600"
                 }
               ].map((feature, index) => (
                 <div
                   key={index}
                   className={`bg-white dark:bg-gray-800 p-4 sm:p-6 lg:p-8 rounded-lg shadow-lg 
-                           transform transition-all duration-300
-                           hover:shadow-xl hover:-translate-y-1
-                           animate-fade-in ${feature.delay}
-                           group cursor-default`}
+                             transform transition-all duration-300
+                             hover:shadow-xl hover:-translate-y-1
+                             animate-fade-in ${feature.delay}
+                             group cursor-default`}
                 >
                   <div className="text-3xl sm:text-4xl lg:text-5xl mb-3 sm:mb-4 lg:mb-6 
-                               transform transition-all duration-300 
-                               group-hover:scale-125">{feature.icon}</div>
+                                transform transition-all duration-300 
+                                group-hover:scale-125">
+                    {feature.icon}
+                  </div>
                   <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2 dark:text-white
-                             transform transition-all duration-300
-                             group-hover:text-red-800 dark:group-hover:text-red-400">
+                               transform transition-all duration-300
+                               group-hover:text-red-800 dark:group-hover:text-red-400">
                     {feature.title}
                   </h3>
                   <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300
-                             transform transition-all duration-300
-                             group-hover:text-red-700 dark:group-hover:text-red-300">
+                               transform transition-all duration-300
+                               group-hover:text-red-700 dark:group-hover:text-red-300">
                     {feature.description}
                   </p>
                 </div>
@@ -141,15 +153,15 @@ export default function HomePage() {
               <a
                 href="/encrypt"
                 className="bg-red-800 text-white px-8 py-3 rounded-md hover:bg-red-700 
-                         transition-all duration-300 transform hover:scale-105"
+                          transition-all duration-300 transform hover:scale-105"
               >
                 Commencer
               </a>
               <a
                 href="/contact"
                 className="bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-white 
-                         px-8 py-3 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600
-                         transition-all duration-300 transform hover:scale-105"
+                          px-8 py-3 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600
+                          transition-all duration-300 transform hover:scale-105"
               >
                 Nous contacter
               </a>
@@ -171,7 +183,7 @@ export default function HomePage() {
                   className="h-8 w-auto mr-2"
                 />
                 <span className="text-xl font-bold bg-gradient-to-r from-red-800 to-white 
-                              bg-clip-text text-transparent">
+                                bg-clip-text text-transparent">
                   SABER
                 </span>
               </div>
@@ -186,16 +198,24 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold mb-4 text-white">Liens Rapides</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="/about" className="hover:text-white transition-colors duration-300">À propos</a>
+                  <a href="/about" className="hover:text-white transition-colors duration-300">
+                    À propos
+                  </a>
                 </li>
                 <li>
-                  <a href="/services" className="hover:text-white transition-colors duration-300">Services</a>
+                  <a href="/services" className="hover:text-white transition-colors duration-300">
+                    Services
+                  </a>
                 </li>
                 <li>
-                  <a href="/blog" className="hover:text-white transition-colors duration-300">Blog</a>
+                  <a href="/blog" className="hover:text-white transition-colors duration-300">
+                    Blog
+                  </a>
                 </li>
                 <li>
-                  <a href="/faq" className="hover:text-white transition-colors duration-300">FAQ</a>
+                  <a href="/faq" className="hover:text-white transition-colors duration-300">
+                    FAQ
+                  </a>
                 </li>
               </ul>
             </div>
@@ -213,7 +233,7 @@ export default function HomePage() {
                 </li>
                 <li className="flex items-center">
                   <Phone size={18} className="mr-2" />
-                  <a href="tel:+33123456789"
+                  <a href="tel:+33767804034"
                      className="hover:text-white transition-colors duration-300">
                     +33 7 67 80 40 34
                   </a>
@@ -225,24 +245,29 @@ export default function HomePage() {
               </ul>
             </div>
             
-            
-            {/* Réseaux sociaux avec connexion sécuriser */} 
+            {/* Réseaux sociaux */}
             <div>
+            {/*ici on sécurise l'accès aux lien avec 'target="_blank" rel="noonpener noreferrer" // On utilise la librairie react-icons/fa pour avoir les derniers icons à jour */}
               <h3 className="text-lg font-semibold mb-4 text-white">Suivez-nous</h3>
               <div className="flex space-x-4">
-                <a href="https://www.facebook.com" target='_blank' rel='noopener noreferrer' className="hover:text-white transition-colors duration-300">
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" 
+                   className="hover:text-white transition-colors duration-300">
                   <FaFacebookF size={24} />
                 </a>
-                <a href="https://twitter.com" target='_blank' rel='noopener noreferrer'   className="hover:text-white transition-colors duration-300">
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"   
+                   className="hover:text-white transition-colors duration-300">
                   <RiTwitterXFill size={24} />
                 </a>
-                <a href="https://www.instagram.com/charles.ltgj" target='_blank' rel='noopener noreferrer' className="hover:text-white transition-colors duration-300">
+                <a href="https://www.instagram.com/charles.ltgj" target="_blank" rel="noopener noreferrer" 
+                   className="hover:text-white transition-colors duration-300">
                   <FaInstagram size={24} />
                 </a>
-                <a href="https://www.linkedin.com/in/charles-lantigua-jorge-2b63132a4" target='_blank' rel='noopener noreferrer' className="hover:text-white transition-colors duration-300">
+                <a href="https://www.linkedin.com/in/charles-lantigua-jorge-2b63132a4" target="_blank" rel="noopener noreferrer" 
+                   className="hover:text-white transition-colors duration-300">
                   <FaLinkedinIn size={24} />
                 </a>
-                <a href="https://github.com/mpgamer75" target='_blank' rel='noopener noreferrer' className="hover:text-white transition-colors duration-300">
+                <a href="https://github.com/mpgamer75" target="_blank" rel="noopener noreferrer" 
+                   className="hover:text-white transition-colors duration-300">
                   <FaGithub size={24} />
                 </a>
               </div>
@@ -269,15 +294,14 @@ export default function HomePage() {
               <div>
                 © {new Date().getFullYear()} SABER. Tous droits réservés.
               </div>
-              <div className="flex space-x-4"> 
-              {/*dans cette partie on développe les liens pour accéder à ces pages que l'on développe => page à créer dans app/page_à_créer / pour que que lorsque l'on clique sur le lien on nous redirige vers la page dédié */}
-                <a href="./privacy" className="hover:text-white transition-colors duration-300">
+              <div className="flex space-x-4">
+                <a href="/privacy" className="hover:text-white transition-colors duration-300">
                   Politique de confidentialité
                 </a>
-                <a href="./terms" className="hover:text-white transition-colors duration-300">
+                <a href="/terms" className="hover:text-white transition-colors duration-300">
                   Conditions d'utilisation
                 </a>
-                <a href="./legal" className="hover:text-white transition-colors duration-300">
+                <a href="/legal" className="hover:text-white transition-colors duration-300">
                   Mentions légales
                 </a>
               </div>
@@ -288,5 +312,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-// zone des liens ( et le footer ) à revoir et à compléter 
