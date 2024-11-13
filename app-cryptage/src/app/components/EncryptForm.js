@@ -86,7 +86,7 @@ const EncryptForm = () => {
         key = CryptoJS.enc.Base64.stringify(wordArray);
       } else if (formData.method === 'RSA') {
         // Génération de paire de clés RSA
-        const JSEncrypt = require('jsencrypt').default;
+        const JSEncrypt = require('jsencrypt').default; // on utilise les librairies au lieu d'utiliser une chaîne de caractère rentrer manuellement
         const encrypt = new JSEncrypt({ default_key_size: 2048 });
         encrypt.getKey();
         key = encrypt.getPublicKey();
@@ -180,7 +180,7 @@ const EncryptForm = () => {
     }
   };
 
-  // [Le JSX reste le même que dans votre code]
+  // partie JSX 
   return (
     <div className="max-w-2xl mx-auto p-6">
       <div className={`rounded-lg shadow-xl p-6 ${
@@ -188,7 +188,7 @@ const EncryptForm = () => {
       }`}>
         {/* Titre */}
         <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-          <Lock className="text-blue-600" />
+          <Lock className="text-green-600" />
           Crypter un message
         </h2>
 

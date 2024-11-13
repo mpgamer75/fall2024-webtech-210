@@ -73,7 +73,7 @@ const Navigation = () => {
                            px-4 py-2 rounded-md w-48
                            focus:outline-none focus:ring-2 focus:ring-white
                            transition-all duration-300
-                           hover:bg-red-800 focus:bg-orange-400"
+                           hover:bg-red-800 focus:bg-red-900"
                 />
                 <Search className="absolute right-3 top-2.5 text-orange-200 pointer-events-none" size={20} />
               </div>
