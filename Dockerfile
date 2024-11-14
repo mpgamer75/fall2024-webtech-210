@@ -11,7 +11,7 @@ COPY .eslintrc.json ./
 COPY ./src ./src
 COPY ./public ./public
 
-# Modifié cette ligne pour inclure --legacy-peer-deps
+
 RUN npm install --legacy-peer-deps
 
 EXPOSE 3000
