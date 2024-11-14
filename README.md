@@ -61,7 +61,8 @@ L'application sera accessible à l'adresse : [http://fall2024-webtech-210-saber1
 ## Liens Utiles
 - [Documentation Next.js](https://nextjs.org/docs)
 - [Documentation Tailwind CSS](https://tailwindcss.com/docs)
-- [Guide de Cryptographie](#)
+- [Guide de Cryptographie](https://cpge-paradise.com/TIPE/HamzaAzzouzi/PPTAzzouzi.pdf)
+
 
 ---
 
