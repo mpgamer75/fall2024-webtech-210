@@ -38,23 +38,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# Build and other environment-specific files
-build/
-dist/
-.env
-.env.local
-
-# IDE and editor-specific files
-.vscode/
-
-# Editor-based HTTP Client requests
-/httpRequests/
-
-# Datasource local storage ignored files
-/dataSources/
-dataSources.local.xm
-
-# Default ignored files
-/shelf/
-/workspace.xml
