@@ -296,20 +296,21 @@ const EncryptForm = () => {
           <button 
             type="submit"
             disabled={isLoading}
-            className={`w-full py-4 rounded-lg transition-colors flex items-center justify-center gap-2
+            className={`ui-btn w-full py-4 rounded-lg transition-colors flex items-center justify-center gap-2
               ${isLoading 
                 ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-red-800 hover:bg-red-800'}
+                : 'bg-red-800 hover:bg-dark'}
               text-white
             `}
           >
           {/*Les {isLoading} permettent de gérer les actions multiples ( sans ça, les utilisateurs ne sauraient pas qu'une action est en cours, ils pourraient modifier les actions alors q'une action est en cours ou cliquer plusieurs fois sur un bouton) */}
             {isLoading ? (
-              <span>Chiffrement en cours...</span>
+              <span className="glitch-text">Chiffrement en cours...</span>
             ) : (
               <>
                 <Lock className="w-5 h-5" />
-                Crypter avec {formData.method}
+                {/*Ici la ligne de code est longu et mal faite mais ce n'est que temporaire */}
+                <span className="glitch-text">Crypt<span className='glitch-text'>er</span> </span> <span className="glitch-text">avec </span> <span className="glitch-text"> {formData.method}</span>
               </>
             )}
           </button>

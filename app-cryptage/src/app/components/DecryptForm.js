@@ -260,14 +260,15 @@ const DecryptForm = () => {
             </div>
           )}
 
-          {/* Bouton de soumission */}
+          {/* Bouton de soumission // prblème au niveau de l'effet hoover pour le bouton de decryptage  */}
           <button 
             type="submit"
             disabled={isLoading}
             className={`w-full py-4 rounded-lg transition-colors flex items-center justify-center gap-2
+              
               ${isLoading 
                 ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-red-800 hover:bg-red-800'}
+                : 'bg-red-800 hover:bg-red-800'} 
               text-white
             `}
           >
