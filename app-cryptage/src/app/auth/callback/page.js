@@ -18,7 +18,7 @@ export default function AuthCallback() {
           
           alert('Email confirmé avec succès ! Vous allez être redirigé vers la page d\'accueil.');
           
-          // Utilisons window.location pour une redirection complète
+          // relocalisation grâce à window
           window.location.href = '/';
         }
       } catch (error) {
@@ -31,7 +31,6 @@ export default function AuthCallback() {
     handleCallback();
   }, []);
 
-  // Affichons quelque chose pendant le traitement
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900">
       <div className="text-center text-white">
