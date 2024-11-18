@@ -1,14 +1,10 @@
-import { createClient } from '@supabase/supabase-js'
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
- console.log('URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
- console.log('KEY:', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
- throw new Error('Variables d\'environnement Supabase manquantes')
-}
-
-const supabase = createClient(
- process.env.NEXT_PUBLIC_SUPABASE_URL,
- process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-)
-
-export { supabase }
+console.log('Environnement:', process.env.NODE_ENV)
+console.log('Variables Supabase:', {
+  url: !!supabaseUrl,
+  key: !!supabaseKey,
+  fullUrl: supabaseUrl,
+  fullKey: supabaseKey?.substring(0, 10) + '...'
+})
