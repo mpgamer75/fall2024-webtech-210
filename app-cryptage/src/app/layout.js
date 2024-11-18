@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
           <div className="min-h-screen dark:bg-gray-900">
             <Navigation />
             <main className="transition-colors duration-300">
-              {children}
+        {children}
             </main>
           </div>
         </ThemeProvider>
