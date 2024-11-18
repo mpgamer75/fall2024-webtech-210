@@ -1,9 +1,9 @@
-// src/app/settings/page.js
 'use client';
 
-import { Settings, Bell, Shield, Moon } from 'lucide-react';
+import { Settings, Bell, Shield, Moon, Skull } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const ToggleSwitch = ({ checked, onChange, label }) => (
   <label className="relative inline-flex items-center cursor-pointer">
@@ -30,6 +30,15 @@ export default function SettingsPage() {
   const { theme, toggleTheme } = useTheme();
   const [notifications, setNotifications] = useState(true);
   const [twoFactor, setTwoFactor] = useState(false);
+  const [doNotTouch, setDoNotTouch] = useState(false);
+  const router = useRouter();
+
+  const handleRedirect = () => {
+    setDoNotTouch(!doNotTouch);
+    if (!doNotTouch) {
+      router.push('/joke'); // Redirige vers /joke
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-8 dark:bg-gray-900">
@@ -75,6 +84,17 @@ export default function SettingsPage() {
               <ToggleSwitch
                 checked={twoFactor}
                 onChange={() => setTwoFactor(!twoFactor)}
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Skull className="dark:text-white" size={20} />
+                <span className="dark:text-white">Ne pas toucher</span>
+              </div>
+              <ToggleSwitch
+                checked={doNotTouch}
+                onChange={handleRedirect}
               />
             </div>
           </div>
