@@ -1,10 +1,10 @@
 'use client';
 
 import { Search, Settings, Home, Lock, Unlock, BookOpen, Menu, LogIn, LogOut } from 'lucide-react';
-import Logo from './Logo';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,20 +49,19 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo et Marque */}
           <div className="flex items-center">
-            <div className="flex items-center">
-              <img 
-                src="/logo-app3.png" 
-                alt="Logo" 
-                className="h-8 w-auto transform transition-all duration-300 hover:scale-110"
-              />
-              <span 
-                className="ml-2 font-bold text-xl md:text-2xl bg-gradient-to-r from-red-800 to-white 
-                         bg-clip-text text-transparent transform transition-all duration-300 
-                         hover:tracking-wider hover:scale-105 cursor-pointer
-                         drop-shadow-[0_2px_1px_rgba(0,0,0,0.3)]">
-                SABER
-              </span>
-            </div>
+            <img
+              src="/logo-app3.png"
+              alt="Logo"
+              className="h-8 w-auto transform transition-all duration-300 hover:scale-110"
+            />
+            <span
+              className="ml-2 font-bold text-xl md:text-2xl bg-gradient-to-r from-red-800 to-white 
+                bg-clip-text text-transparent transform transition-all duration-300 
+                hover:tracking-wider hover:scale-105 cursor-pointer
+                drop-shadow-[0_2px_1px_rgba(0,0,0,0.3)]"
+            >
+              SABER
+            </span>
           </div>
 
           {/* Bouton Menu Mobile */}
@@ -79,16 +78,16 @@ const Navigation = () => {
           <div className="hidden md:flex items-center justify-between flex-1 ml-10">
             <div className="flex items-center space-x-4">
               {links.map(({ href, icon: Icon, text }) => (
-                <a
+                <Link
                   key={href}
                   href={href}
                   className="group flex items-center space-x-2 px-3 py-2 rounded-md
-                           hover:bg-red-800 transition-all duration-300
-                           hover:shadow-lg hover:-translate-y-0.5"
+                    hover:bg-red-800 transition-all duration-300
+                    hover:shadow-lg hover:-translate-y-0.5"
                 >
                   <Icon size={20} className="transform transition-transform duration-300 group-hover:scale-110" />
                   <span className="transition-colors duration-300">{text}</span>
-                </a>
+                </Link>
               ))}
             </div>
 
@@ -99,46 +98,102 @@ const Navigation = () => {
                   type="text"
                   placeholder="Rechercher..."
                   className="bg-gray-500 text-white placeholder-gray-300 
-                           px-4 py-2 rounded-md w-48
-                           focus:outline-none focus:ring-2 focus:ring-white
-                           transition-all duration-300
-                           hover:bg-red-800 focus:bg-red-900"
+                    px-4 py-2 rounded-md w-48
+                    focus:outline-none focus:ring-2 focus:ring-white
+                    transition-all duration-300
+                    hover:bg-red-800 focus:bg-red-900"
                 />
                 <Search className="absolute right-3 top-2.5 text-orange-200 pointer-events-none" size={20} />
               </div>
 
-              <a
+              <Link
                 href="/settings"
                 className="group flex items-center space-x-2 px-3 py-2 rounded-md
-                         hover:bg-red-800 transition-all duration-300
-                         hover:shadow-lg hover:-translate-y-0.5"
+                  hover:bg-red-800 transition-all duration-300
+                  hover:shadow-lg hover:-translate-y-0.5"
               >
                 <Settings size={20} className="transform transition-transform duration-300 group-hover:scale-110" />
                 <span className="transition-colors duration-300 hidden lg:inline">Paramètres</span>
-              </a>
+              </Link>
 
               {/* Bouton Connexion/Déconnexion */}
               {user ? (
                 <button
                   onClick={handleLogout}
                   className="flex items-center px-4 py-2 rounded-md bg-red-600 hover:bg-red-800 text-white
-                           font-semibold transition-all duration-300 hover:shadow-lg"
+                    font-semibold transition-all duration-300 hover:shadow-lg"
                 >
                   <LogOut size={20} className="mr-2" />
                   Déconnexion
                 </button>
               ) : (
-                <a
+                <Link
                   href="/login"
                   className="flex items-center px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-800 text-white
-                           font-semibold transition-all duration-300 hover:shadow-lg"
+                    font-semibold transition-all duration-300 hover:shadow-lg"
                 >
                   <LogIn size={20} className="mr-2" />
                   Connexion
-                </a>
+                </Link>
               )}
             </div>
           </div>
+
+          {/* Menu Mobile */}
+          {isMenuOpen && (
+            <div className="md:hidden absolute top-16 left-0 right-0 bg-gray-600 shadow-lg">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                {links.map(({ href, icon: Icon, text }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="items-center space-x-2 px-3 py-2 rounded-md hover:bg-red-800 
+                      text-white block transition-all duration-300"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <Icon size={20} />
+                    <span>{text}</span>
+                  </Link>
+                ))}
+
+                {/* Paramètres en version mobile */}
+                <Link
+                  href="/settings"
+                  className="items-center space-x-2 px-3 py-2 rounded-md hover:bg-red-800 
+                    text-white block transition-all duration-300"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Settings size={20} />
+                  <span>Paramètres</span>
+                </Link>
+
+                {/* Bouton Connexion/Déconnexion en version mobile */}
+                {user ? (
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full flex items-center px-3 py-2 rounded-md bg-red-600 hover:bg-red-800 
+                      text-white transition-all duration-300"
+                  >
+                    <LogOut size={20} className="mr-2" />
+                    Déconnexion
+                  </button>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="flex items-center px-3 py-2 rounded-md bg-blue-600 hover:bg-blue-800 
+                      text-white transition-all duration-300"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <LogIn size={20} className="mr-2" />
+                    Connexion
+                  </Link>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </nav>
