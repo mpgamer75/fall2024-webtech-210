@@ -10,8 +10,11 @@ import {
   Home as HomeIcon, 
   Lock, 
   Unlock, 
-  BookOpen 
+  BookOpen,
+  Menu,
+  X,
 } from 'lucide-react';
+import { useState } from 'react';
 
 import { 
   FaFacebookF, 
@@ -23,8 +26,57 @@ import {
 import { RiTwitterXFill } from 'react-icons/ri';
 
 export default function HomePage() {
+  const [isMenuOpen, setIsMenuOpen]=useState(false);
+
+  const toggleMenu = () =>{
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+    {/* Navigation Mobile */}
+    <div className="lg:hidden fixed top-0 right-0 z-50 p-4">
+        <button 
+          onClick={toggleMenu}
+          className="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg"
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Menu Mobile Overlay */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-40 bg-white dark:bg-gray-900 flex items-center justify-center">
+          <div className="flex flex-col items-center space-y-8">
+            <a href="/" 
+               className="text-2xl font-medium hover:text-red-800 dark:hover:text-red-400"
+               onClick={toggleMenu}>
+              Accueil
+            </a>
+            <a href="/encrypt" 
+               className="text-2xl font-medium hover:text-red-800 dark:hover:text-red-400"
+               onClick={toggleMenu}>
+              Cryptage
+            </a>
+            <a href="/decrypt" 
+               className="text-2xl font-medium hover:text-red-800 dark:hover:text-red-400"
+               onClick={toggleMenu}>
+              Décryptage
+            </a>
+            <a href="/about" 
+               className="text-2xl font-medium hover:text-red-800 dark:hover:text-red-400"
+               onClick={toggleMenu}>
+              À propos
+            </a>
+            <a href="/contact" 
+               className="text-2xl font-medium hover:text-red-800 dark:hover:text-red-400"
+               onClick={toggleMenu}>
+              Contact
+            </a>
+          </div>
+        </div>
+      )}
+
       <main className="flex-grow">
         {/* Hero Section */}
         <div className="min-h-screen py-8 sm:py-12 lg:py-16 px-4 overflow-hidden">
