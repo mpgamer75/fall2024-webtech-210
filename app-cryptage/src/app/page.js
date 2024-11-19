@@ -46,7 +46,7 @@ export default function HomePage() {
 
       {/* Menu Mobile Overlay */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-white dark:bg-gray-900 flex items-center justify-center">
+        <div className="fixed inset-0 z-40 white: bg-white flex items-center justify-center">
           <div className="flex flex-col items-center space-y-8">
             <a href="/" 
                className="text-2xl font-medium hover:text-red-800 dark:hover:text-red-400"
