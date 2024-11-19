@@ -1,6 +1,6 @@
 'use client';
 
-import { Settings, Bell, Shield, Moon, Skull, Sun, Globe } from 'lucide-react';
+import { Settings, Bell, Shield, Moon } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 //import { useLanguage } from '../contexts/LanguageContext';
 import { useState } from 'react';
@@ -28,19 +28,9 @@ const ToggleSwitch = ({ checked, onChange, label }) => (
 );
 
 export default function SettingsPage() {
- const { theme, toggleTheme } = useTheme();
- //const { language, changeLanguage } = useLanguage();
- const [notifications, setNotifications] = useState(true);
- const [twoFactor, setTwoFactor] = useState(false);
- const [doNotTouch, setDoNotTouch] = useState(false);
- const router = useRouter();
-
- const handleRedirect = () => {
-   setDoNotTouch(!doNotTouch);
-   if (!doNotTouch) {
-     router.push('/joke');
-   }
- };
+  const { theme, toggleTheme } = useTheme();
+  const [notifications, setNotifications] = useState(true);
+  const [twoFactor, setTwoFactor] = useState(false);
 
  return (
    <div className="max-w-4xl mx-auto px-6 py-8 dark:bg-gray-900">
@@ -86,48 +76,19 @@ export default function SettingsPage() {
              />
            </div>
 
-           {/* Double authentification */}
-           <div className="flex items-center justify-between">
-             <div className="flex items-center gap-2">
-               <Shield className="dark:text-white text-gray-900" size={20} />
-               <span className="dark:text-white text-gray-900">Double authentification</span>
-             </div>
-             <ToggleSwitch
-               checked={twoFactor}
-               onChange={() => setTwoFactor(!twoFactor)}
-             />
-           </div>
-
-           {/* Ne pas toucher */}
-           <div className="flex items-center justify-between">
-             <div className="flex items-center gap-2">
-               <Skull className="dark:text-white text-gray-900" size={20} />
-               <span className="dark:text-white text-gray-900">Ne pas toucher</span>
-             </div>
-             <ToggleSwitch
-               checked={doNotTouch}
-               onChange={handleRedirect}
-             />
-           </div>
-
-           {/* Choix de la langue */}
-           <div className="flex items-center justify-between">
-             <div className="flex items-center gap-2">
-               <Globe className="dark:text-white text-gray-900" size={20} />
-               <span className="dark:text-white text-gray-900">Langue</span>
-             </div>
-             <select
-               //value={language}
-               onChange={(e) => changeLanguage(e.target.value)}
-               className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
-             >
-               <option value="en">Français</option>
-               <option value="fr">English</option>
-             </select>
-           </div>
-         </div>
-       </div>
-     </div>
-   </div>
- );
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Shield className="dark:text-white" size={20} />
+                <span className="dark:text-white">Double authentification</span>
+              </div>
+              <ToggleSwitch
+                checked={twoFactor}
+                onChange={() => setTwoFactor(!twoFactor)}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
