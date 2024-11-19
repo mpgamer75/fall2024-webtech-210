@@ -1,7 +1,8 @@
 'use client';
 
-import { Settings, Bell, Shield, Moon, Skull, Sun } from 'lucide-react';
+import { Settings, Bell, Shield, Moon, Skull, Sun, Globe } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
+//import { useLanguage } from '../contexts/LanguageContext';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -28,6 +29,7 @@ const ToggleSwitch = ({ checked, onChange, label }) => (
 
 export default function SettingsPage() {
  const { theme, toggleTheme } = useTheme();
+ //const { language, changeLanguage } = useLanguage();
  const [notifications, setNotifications] = useState(true);
  const [twoFactor, setTwoFactor] = useState(false);
  const [doNotTouch, setDoNotTouch] = useState(false);
@@ -54,6 +56,7 @@ export default function SettingsPage() {
          </h2>
 
          <div className="space-y-6">
+           {/* Mode sombre / clair */}
            <div className="flex items-center justify-between">
              <div className="flex items-center gap-2">
                {theme === 'dark' ? (
@@ -71,6 +74,7 @@ export default function SettingsPage() {
              />
            </div>
 
+           {/* Notifications */}
            <div className="flex items-center justify-between">
              <div className="flex items-center gap-2">
                <Bell className="dark:text-white text-gray-900" size={20} />
@@ -82,6 +86,7 @@ export default function SettingsPage() {
              />
            </div>
 
+           {/* Double authentification */}
            <div className="flex items-center justify-between">
              <div className="flex items-center gap-2">
                <Shield className="dark:text-white text-gray-900" size={20} />
@@ -93,6 +98,7 @@ export default function SettingsPage() {
              />
            </div>
 
+           {/* Ne pas toucher */}
            <div className="flex items-center justify-between">
              <div className="flex items-center gap-2">
                <Skull className="dark:text-white text-gray-900" size={20} />
@@ -102,6 +108,22 @@ export default function SettingsPage() {
                checked={doNotTouch}
                onChange={handleRedirect}
              />
+           </div>
+
+           {/* Choix de la langue */}
+           <div className="flex items-center justify-between">
+             <div className="flex items-center gap-2">
+               <Globe className="dark:text-white text-gray-900" size={20} />
+               <span className="dark:text-white text-gray-900">Langue</span>
+             </div>
+             <select
+               //value={language}
+               onChange={(e) => changeLanguage(e.target.value)}
+               className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
+             >
+               <option value="en">Français</option>
+               <option value="fr">English</option>
+             </select>
            </div>
          </div>
        </div>
