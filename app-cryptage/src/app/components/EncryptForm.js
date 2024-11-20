@@ -1,22 +1,95 @@
 'use client';
 
 import { useState } from 'react';
-import { Lock, Copy, Download } from 'lucide-react';
+import { Lock, Copy, Download, Upload } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import CryptoJS from 'crypto-js';
+
 
 const EncryptForm = () => {
   const { theme } = useTheme();
   const [formData, setFormData] = useState({
     text: '',
     key: '',
-    method: 'BTOA64'
+    method: 'BTOA64',
+    file: null // Ajout pour la gestion des fichiers
   });
   const [errors, setErrors] = useState({});
   const [encryptedText, setEncryptedText] = useState('');
   const [showResult, setShowResult] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [keyPair, setKeyPair] = useState(null);
+  const [fileName, setFileName] = useState(''); // Pour afficher le nom du fichier
+
+  // Fonction pour lire un fichier texte
+  const readTextFile = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target.result);
+      reader.onerror = (e) => reject(e);
+      reader.readAsText(file);
+    });
+  };
+
+  // Fonction pour lire un fichier PDF
+  const readPdfFile = async (file) => {
+    try {
+      if (typeof window === 'undefined' || !window.pdfjsLib) {
+        throw new Error('PDF.js non disponible');
+      }
+  
+      const fileArrayBuffer = await file.arrayBuffer();
+      const pdf = await window.pdfjsLib.getDocument({ data: fileArrayBuffer }).promise;
+      let fullText = '';
+      
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+        const pageText = textContent.items.map(item => item.str).join(' ');
+        fullText += pageText + '\n';
+      }
+      
+      return fullText;
+    } catch (error) {
+      console.error('PDF Error:', error);
+      throw new Error('Erreur lors de la lecture du PDF. Vérifiez que le fichier est valide.');
+    }
+  };
+  // Gestion de l'import de fichier
+  const handleFileImport = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+  
+    setIsLoading(true);
+    setFileName(file.name);
+    
+    try {
+      let fileContent = '';
+      
+      if (file.type === 'application/pdf') {
+        fileContent = await readPdfFile(file);
+      } else if (file.type === 'text/plain' || file.name.endsWith('.txt')) {
+        fileContent = await readTextFile(file);
+      } else {
+        throw new Error('Format de fichier non supporté (utilisez .txt ou .pdf)');
+      }
+  
+      setFormData(prev => ({
+        ...prev,
+        text: fileContent,
+        file: file
+      }));
+      
+      setErrors({});
+    } catch (error) {
+      setErrors(prev => ({
+        ...prev,
+        file: 'Erreur lors de la lecture du fichier: ' + error.message
+      }));
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Validation du formulaire
   const validateForm = () => {
@@ -64,16 +137,26 @@ const EncryptForm = () => {
       const JSEncrypt = require('jsencrypt').default;
       const encrypt = new JSEncrypt();
       encrypt.setPublicKey(formData.key);
-      const encrypted = encrypt.encrypt(text);
-      if (!encrypted) {
-        throw new Error('Échec du chiffrement');
-      }
-      return encrypted;
+  
+      // Fonction pour découper le texte en morceaux de taille maximale
+      const chunkSize = 100; // Taille sécurisée pour RSA 2048 bits
+      const chunks = text.match(new RegExp(`.{1,${chunkSize}}`, 'g')) || [];
+      
+      // Chiffre chaque morceau
+      const encryptedChunks = chunks.map(chunk => {
+        const encrypted = encrypt.encrypt(chunk);
+        if (!encrypted) {
+          throw new Error('Échec du chiffrement d\'un segment');
+        }
+        return encrypted;
+      });
+  
+      // Joins ici les morceaux chiffrés avec un séparateur
+      return JSON.stringify(encryptedChunks);
     } catch (error) {
-      throw new Error('Erreur lors du chiffrement RSA');
+      throw new Error('Erreur lors du chiffrement RSA: ' + error.message);
     }
   };
-
   // Génération de clé aléatoire
   const generateRandomKey = () => {
     setIsLoading(true);
@@ -86,7 +169,7 @@ const EncryptForm = () => {
         key = CryptoJS.enc.Base64.stringify(wordArray);
       } else if (formData.method === 'RSA') {
         // Génération de paire de clés RSA
-        const JSEncrypt = require('jsencrypt').default; // on utilise les librairies au lieu d'utiliser une chaîne de caractère rentrer manuellement
+        const JSEncrypt = require('jsencrypt').default;
         const encrypt = new JSEncrypt({ default_key_size: 2048 });
         encrypt.getKey();
         key = encrypt.getPublicKey();
@@ -121,16 +204,16 @@ const EncryptForm = () => {
     try {
       let filename = 'message-crypte.txt';
       let content = encryptedText;
-
+  
       // Si c'est RSA, inclure aussi la clé privée
       if (formData.method === 'RSA' && keyPair) {
         filename = 'cryptage-rsa.txt';
         content = JSON.stringify({
-          messageChiffre: encryptedText,
+          messageChiffre: JSON.parse(encryptedText), // Maintenant un tableau de chunks
           clePrivee: keyPair.privateKey
         }, null, 2);
       }
-
+  
       const blob = new Blob([content], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -180,7 +263,6 @@ const EncryptForm = () => {
     }
   };
 
-  // partie JSX 
   return (
     <div className="max-w-2xl mx-auto p-6">
       <div className={`rounded-lg shadow-xl p-6 ${
@@ -189,7 +271,7 @@ const EncryptForm = () => {
         {/* Titre */}
         <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
           <Lock className="text-green-600" />
-          Crypter un message
+          Crypter un message ou un fichier
         </h2>
 
         {/* Formulaire */}
@@ -222,10 +304,48 @@ const EncryptForm = () => {
             )}
           </div>
 
+          {/* Import de fichier */}
+          <div>
+            <label className="block mb-2 font-medium">
+              Importer un fichier (optionnel)
+            </label>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-4">
+                <input
+                  type="file"
+                  onChange={handleFileImport}
+                  accept=".txt,.pdf"
+                  className="hidden"
+                  id="file-upload"
+                  disabled={isLoading}
+                />
+                <label
+                  htmlFor="file-upload"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg border cursor-pointer transition-colors
+                    ${theme === 'dark' 
+                      ? 'bg-gray-700 hover:bg-gray-600 border-gray-600' 
+                      : 'bg-white hover:bg-gray-50 border-gray-300'}
+                  `}
+                >
+                  <Upload className="w-5 h-5" />
+                  Choisir un fichier
+                </label>
+                {fileName && (
+                  <span className="text-sm text-gray-500">
+                    {fileName}
+                  </span>
+                )}
+              </div>
+              {errors.file && (
+                <p className="text-red-500 text-sm">{errors.file}</p>
+              )}
+            </div>
+          </div>
+
           {/* Zone de texte */}
           <div>
             <label className="block mb-2 font-medium">
-              Texte à crypter
+              Texte à crypter {formData.file && "(ou contenu du fichier)"}
             </label>
             <textarea
               value={formData.text}
@@ -234,7 +354,7 @@ const EncryptForm = () => {
                 ${errors.text ? 'border-red-500' : 'border-gray-300'}
                 ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white'}
               `}
-              placeholder="Entrez votre texte ici..."
+              placeholder={formData.file ? "Le contenu du fichier apparaîtra ici..." : "Entrez votre texte ici..."}
               disabled={isLoading}
             />
             {errors.text && (
@@ -274,8 +394,8 @@ const EncryptForm = () => {
                 onClick={generateRandomKey}
                 disabled={isLoading}
                 className={`self-end px-6 py-4 border rounded-lg transition-colors whitespace-nowrap
-                  ${theme === 'dark' 
-                    ? 'bg-gray-700 hover:bg-gray-600 text-white border-gray-600' 
+                  ${theme === 'dark'
+                  ? 'bg-gray-700 hover:bg-gray-600 text-white border-gray-600' 
                     : 'bg-white hover:bg-gray-50 border-gray-300'}
                   ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}
                 `}
@@ -303,13 +423,11 @@ const EncryptForm = () => {
               text-white
             `}
           >
-          {/*Les {isLoading} permettent de gérer les actions multiples ( sans ça, les utilisateurs ne sauraient pas qu'une action est en cours, ils pourraient modifier les actions alors q'une action est en cours ou cliquer plusieurs fois sur un bouton) */}
             {isLoading ? (
               <span className="glitch-text">Chiffrement en cours...</span>
             ) : (
               <>
                 <Lock className="w-5 h-5" />
-                {/*Ici la ligne de code est longu et mal faite mais ce n'est que temporaire */}
                 <span className="glitch-text">Crypt<span className='glitch-text'>er</span> </span> <span className="glitch-text">avec </span> <span className="glitch-text"> {formData.method}</span>
               </>
             )}
@@ -322,7 +440,9 @@ const EncryptForm = () => {
             ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}
           >
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
-              <h3 className="font-medium">Texte crypté ({formData.method}) :</h3>
+              <h3 className="font-medium">
+                {formData.file ? 'Fichier crypté' : 'Texte crypté'} ({formData.method}) :
+              </h3>
               <div className="flex gap-2 w-full sm:w-auto">
                 <button
                   onClick={copyToClipboard}
