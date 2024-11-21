@@ -20,7 +20,6 @@ const EncryptForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [keyPair, setKeyPair] = useState(null);
   const [fileName, setFileName] = useState(''); // Pour afficher le nom du fichier
-
   // Fonction pour lire un fichier texte
   const readTextFile = (file) => {
     return new Promise((resolve, reject) => {
@@ -205,7 +204,7 @@ const EncryptForm = () => {
       let filename = 'message-crypte.txt';
       let content = encryptedText;
   
-      // Si c'est RSA, inclure aussi la clé privée
+      // Si c'est RSA, on inclu également la clé privée
       if (formData.method === 'RSA' && keyPair) {
         filename = 'cryptage-rsa.txt';
         content = JSON.stringify({

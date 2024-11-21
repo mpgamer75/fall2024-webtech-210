@@ -144,7 +144,7 @@ export default function BlogPage() {
       }
     } catch (error) {
       console.error('Like error:', error);
-      // Restaurer l'état précédent en cas d'erreur
+      // Restaurel'état précédent en cas d'erreur
       const { data } = await supabase
         .from('likes')
         .select('*')

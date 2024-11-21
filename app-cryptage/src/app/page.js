@@ -1,85 +1,24 @@
 'use client';
 
-import Logo from './components/Logo';
-import { 
-  Mail, 
-  Phone, 
-  MapPin,
-  Search, 
-  Settings, 
-  Home as HomeIcon, 
-  Lock, 
-  Unlock, 
-  BookOpen,
-  Menu,
-  X,
-} from 'lucide-react';
-import { useState } from 'react';
 
+import Logo from './components/Logo';
+import { Mail, Phone, MapPin } from 'lucide-react';
 import { 
   FaFacebookF, 
   FaInstagram, 
   FaLinkedinIn, 
   FaGithub 
 } from 'react-icons/fa';
-
 import { RiTwitterXFill } from 'react-icons/ri';
 
 export default function HomePage() {
-  const [isMenuOpen, setIsMenuOpen]=useState(false);
-
-  const toggleMenu = () =>{
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   return (
     <div className="min-h-screen flex flex-col">
-    {/* Navigation Mobile */}
-    <div className="lg:hidden fixed top-0 right-0 z-50 p-4">
-        <button 
-          onClick={toggleMenu}
-          className="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg"
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
+      
 
-      {/* Menu Mobile Overlay */}
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-40 white: bg-white flex items-center justify-center">
-          <div className="flex flex-col items-center space-y-8">
-            <a href="/" 
-               className="text-2xl font-medium hover:text-red-800 dark:hover:text-red-400"
-               onClick={toggleMenu}>
-              Accueil
-            </a>
-            <a href="/encrypt" 
-               className="text-2xl font-medium hover:text-red-800 dark:hover:text-red-400"
-               onClick={toggleMenu}>
-              Cryptage
-            </a>
-            <a href="/decrypt" 
-               className="text-2xl font-medium hover:text-red-800 dark:hover:text-red-400"
-               onClick={toggleMenu}>
-              Décryptage
-            </a>
-            <a href="/about" 
-               className="text-2xl font-medium hover:text-red-800 dark:hover:text-red-400"
-               onClick={toggleMenu}>
-              À propos
-            </a>
-            <a href="/contact" 
-               className="text-2xl font-medium hover:text-red-800 dark:hover:text-red-400"
-               onClick={toggleMenu}>
-              Contact
-            </a>
-          </div>
-        </div>
-      )}
-
-      <main className="flex-grow">
+      <main className="flex-grow pt-16">
         {/* Hero Section */}
-        <div className="min-h-screen py-8 sm:py-12 lg:py-16 px-4 overflow-hidden">
+        <div className="min-h-[calc(100vh-4rem)] py-8 sm:py-12 lg:py-16 px-4 overflow-hidden">
           <div className="max-w-[1920px] mx-auto text-center">
             {/* Logo et titre centrés */}
             <div className="mb-8 sm:mb-12 animate-fade-in flex flex-col items-center">
@@ -299,7 +238,6 @@ export default function HomePage() {
             
             {/* Réseaux sociaux */}
             <div>
-            {/*ici on sécurise l'accès aux lien avec 'target="_blank" rel="noonpener noreferrer" // On utilise la librairie react-icons/fa pour avoir les derniers icons à jour */}
               <h3 className="text-lg font-semibold mb-4 text-white">Suivez-nous</h3>
               <div className="flex space-x-4">
                 <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" 
