@@ -41,7 +41,7 @@ npm run start   # Lancement production
 ```
 ### Docker 
 Implémentation de docker pour mieux développer l'application en groupe 
-Commandes: 
+# Commandes: 
 ```bash
 docker build
 docker start
