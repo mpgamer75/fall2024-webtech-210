@@ -1,4 +1,11 @@
-# Documentation du Projet
+# Projet Cryptage/Décryptage
+
+
+## Description
+Cette application web permet de crypter et de décrypter des messages ou des documents en toute simplicité. Conçue pour être intuitive et sécurisée, elle offre une interface utilisateur moderne avec la prise en charge du mode sombre et clair. Elle s'adresse aux utilisateurs souhaitant protéger leurs données sensibles ou partager des messages sécurisés.
+
+
+## Documentation du Projet
 
 ### Fonctionnalités Principales
 - **État** : Gestion de l'état avec React Context
