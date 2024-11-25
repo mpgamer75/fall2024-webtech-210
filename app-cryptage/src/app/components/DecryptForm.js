@@ -1,4 +1,3 @@
-// src/components/DecryptForm.js
 'use client';
 
 import { useState } from 'react';
@@ -11,7 +10,7 @@ const DecryptForm = () => {
   const [formData, setFormData] = useState({
     encryptedText: '',
     key: '',
-    method: 'BTOA64' // Par défaut
+    method: 'BTOA64' // Méthode par défaut pour l'instant
   });
   const [errors, setErrors] = useState({});
   const [decryptedText, setDecryptedText] = useState('');
@@ -79,7 +78,7 @@ const DecryptForm = () => {
       reader.onload = (event) => {
         const content = event.target?.result?.toString() || '';
         try {
-          // Tenter de parser comme JSON pour les fichiers RSA
+          
           const jsonContent = JSON.parse(content);
           if (jsonContent.messageChiffre && jsonContent.clePrivee) {
             setFormData(prev => ({
@@ -95,7 +94,7 @@ const DecryptForm = () => {
             }));
           }
         } catch {
-          // Si ce n'est pas du JSON, utiliser le contenu tel quel
+          
           setFormData(prev => ({
             ...prev,
             encryptedText: content

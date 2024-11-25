@@ -12,14 +12,15 @@ const EncryptForm = () => {
     text: '',
     key: '',
     method: 'BTOA64',
-    file: null // Ajout pour la gestion des fichiers
+    file: null 
   });
   const [errors, setErrors] = useState({});
   const [encryptedText, setEncryptedText] = useState('');
   const [showResult, setShowResult] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [keyPair, setKeyPair] = useState(null);
-  const [fileName, setFileName] = useState(''); // Pour afficher le nom du fichier
+  const [fileName, setFileName] = useState(''); // Nous permet d'afficher le nom du fichier 
+
   // Fonction pour lire un fichier texte
   const readTextFile = (file) => {
     return new Promise((resolve, reject) => {
@@ -138,7 +139,7 @@ const EncryptForm = () => {
       encrypt.setPublicKey(formData.key);
   
       // Fonction pour découper le texte en morceaux de taille maximale
-      const chunkSize = 100; // Taille sécurisée pour RSA 2048 bits
+      const chunkSize = 100; // Taille sécurisée pour RSA 2048 bits ( on va modifier pour aller au oins à 4086 bits)
       const chunks = text.match(new RegExp(`.{1,${chunkSize}}`, 'g')) || [];
       
       // Chiffre chaque morceau
@@ -208,7 +209,7 @@ const EncryptForm = () => {
       if (formData.method === 'RSA' && keyPair) {
         filename = 'cryptage-rsa.txt';
         content = JSON.stringify({
-          messageChiffre: JSON.parse(encryptedText), // Maintenant un tableau de chunks
+          messageChiffre: JSON.parse(encryptedText), 
           clePrivee: keyPair.privateKey
         }, null, 2);
       }
@@ -361,7 +362,7 @@ const EncryptForm = () => {
             )}
           </div>
 
-          {/* Section clé de cryptage (conditionnelle) */}
+          {/* Section clé de cryptage (conditionnelle/ l'utilisateur peut créer sa propre clé) */}
           {formData.method !== 'BTOA64' && (
             <div className="flex gap-4 flex-col sm:flex-row">
               <div className="flex-1">
