@@ -15,4 +15,10 @@ if (!supabaseUrl || !supabaseKey) {
   throw new Error('Variables d\'environnement Supabase manquantes')
 }*/
 
+// Pour Docker 
+
+if(!supabaseUrl || !supabaseKey){
+  throw new Error('Variables d\'environnement Supabase manquantes');
+}
+
 export const supabase = createClient(supabaseUrl, supabaseKey)
