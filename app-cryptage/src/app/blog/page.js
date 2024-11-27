@@ -1,29 +1,57 @@
+'use client';
+
+import { useState } from 'react';
+import { supabase } from '@/lib/supabase';
+
 export default function BlogPage() {
+  const [content, setContent] = useState('');
+  const [posts, setPosts] = useState([]);
+
+  const handleCreatePost = async (e) => {
+    e.preventDefault();
+    const user = supabase.auth.user();
+    if (!user) return alert('Connectez-vous pour publier.');
+
+    const { data, error } = await supabase.from('posts').insert([
+      { user_id: user.id, content },
+    ]);
+
+    if (error) return alert(error.message);
+    setPosts([data[0], ...posts]);
+    setContent('');
+  };
+
+  const handleLike = async (post_id) => {
+    const user = supabase.auth.user();
+    if (!user) return alert('Connectez-vous pour liker.');
+  
+    const { error } = await supabase.from('likes').insert([{ post_id, user_id: user.id }]);
+    if (!error) fetchPosts(); // Met à jour les posts avec les nouveaux likes
+  };
+  
+
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
-      <h1 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white">
-        Blog
-      </h1>
-      
-      <div className="grid gap-8 md:grid-cols-2">
-        <article className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-          <div className="p-6">
-            <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
-              L'importance du cryptage
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Découvrez pourquoi le cryptage est essentiel...
-            </p>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-500 dark:text-gray-400">
-                10 Nov 2024
-              </span>
-              <button className="text-blue-600 dark:text-blue-400 hover:underline">
-                Lire plus
-              </button>
-            </div>
+    <div className="p-4">
+      <form onSubmit={handleCreatePost} className="mb-4">
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="Écrivez votre message..."
+          required
+          className="w-full p-2 border mb-2"
+        />
+        <button type="submit" className="w-full bg-blue-500 text-white p-2">
+          Publier
+        </button>
+      </form>
+
+
+      <div className="space-y-4">
+        {posts.map((post) => (
+          <div key={post.id} className="p-4 bg-white shadow">
+            <p>{post.content}</p>
           </div>
-        </article>
+        ))}
       </div>
     </div>
   );
