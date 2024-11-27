@@ -1,4 +1,3 @@
-// src/app/components/Logo.js
 'use client';
 
 import Image from 'next/image';
