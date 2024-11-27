@@ -31,14 +31,6 @@ export default function RootLayout({ children }) {
       </head>
       <body className="antialiased transition-colors duration-300">
 
-        <ThemeProvider>
-          <div className="min-h-screen dark:bg-gray-900">
-            <Navigation />
-            <main className="transition-colors duration-300">
-        {children}
-            </main>
-          </div>
-        </ThemeProvider>
         <AuthProvider>
           <ThemeProvider>
             <div className="min-h-screen dark:bg-gray-900">
