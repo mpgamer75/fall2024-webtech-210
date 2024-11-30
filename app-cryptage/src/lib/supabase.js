@@ -9,11 +9,7 @@ console.log('Variables Supabase:', {
   key: !!supabaseKey,
   fullUrl: supabaseUrl,
   fullKey: supabaseKey?.substring(0, 10) + '...'
-})
-
-if (!supabaseUrl || !supabaseKey) {
-  throw new Error('Variables d\'environnement Supabase manquantes')
-}*/
+})*/
 
 // Pour Docker 
 

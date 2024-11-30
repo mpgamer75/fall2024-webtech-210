@@ -99,7 +99,7 @@ export default function SettingsPage() {
            <div className="flex items-center justify-between">
              <div className="flex items-center gap-2">
                <Skull className="dark:text-white text-gray-900" size={20} />
-               <span className="dark:text-white text-gray-900">Ne pas toucher</span>
+               <span className="dark:text-white text-gray-900">Ne pas toucher/ don't touch</span>
              </div>
              <ToggleSwitch
                checked={doNotTouch}
