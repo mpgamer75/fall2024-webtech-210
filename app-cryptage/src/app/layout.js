@@ -4,6 +4,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import './globals.css';
 import { AuthProvider } from './contexts/AuthContext';
 import Script from 'next/script';
+import SearchBar from "./components/SearchBar";
 
 export const metadata = {
   title: 'SABER',
