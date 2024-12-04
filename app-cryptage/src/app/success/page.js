@@ -6,13 +6,24 @@ import { useRouter } from 'next/navigation';
 export default function Success() {
   const router = useRouter();
   const canvasRef = useRef(null);
-  const [text, setText] = useState('');
+  const [displayedLines, setDisplayedLines] = useState([]);
   const [isDone, setIsDone] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const timerRef = useRef(null);
   const messageIndexRef = useRef(0);
   const charIndexRef = useRef(0);
+
+  // Fonction pour adapter la taille du texte ASCII
+  const getASCIIArtSize = () => {
+    if (dimensions.width < 640) {
+      return 'text-[6px]';
+    } else if (dimensions.width < 768) {
+      return 'text-[8px]';
+    } else {
+      return 'text-xs md:text-sm';
+    }
+  };
 
   // Gestion des dimensions de l'écran
   useEffect(() => {
@@ -87,38 +98,55 @@ export default function Success() {
     };
   }, []);
 
-  // Animation de texte
+  // Animation de texte améliorée
   useEffect(() => {
     const messages = [
       "> INITIALIZING HACK.EXE ...",
-      "> CONNEXION ÉTABLIE ...",
-      "> SCAN EN COURS ...",
-      "> RÉCUPÉRATION DES DONNÉES ...",
-      "> ANALYSE TERMINÉE"
+      "> SUCCESSFULLY CONNECTED ...",
+      "> INITIATING SCAN ...",
+      "> FETCHING DATA ...",
+      "> DONE ( YOU'RE COOKED )"
     ];
 
     const typeWriter = () => {
-      const currentMessage = messages[messageIndexRef.current];
+      const message = messages[messageIndexRef.current];
       
-      if (charIndexRef.current < currentMessage.length) {
-        setText(text => text + currentMessage[charIndexRef.current]);
+      if (!displayedLines[messageIndexRef.current]) {
+        setDisplayedLines(prev => {
+          const newLines = [...prev];
+          newLines[messageIndexRef.current] = '';
+          return newLines;
+        });
+      }
+      
+      if (charIndexRef.current < message.length) {
+        setDisplayedLines(prev => {
+          const newLines = [...prev];
+          newLines[messageIndexRef.current] = message.substring(0, charIndexRef.current + 1);
+          return newLines;
+        });
         charIndexRef.current++;
       } else {
         if (messageIndexRef.current < messages.length - 1) {
-          setText(text => text + '\n');
           messageIndexRef.current++;
           charIndexRef.current = 0;
           clearInterval(timerRef.current);
           setTimeout(() => {
             timerRef.current = setInterval(typeWriter, 30);
-          }, 800);
+          }, 1000); // Délai entre les messages
         } else {
-          setIsDone(true);
+          // Quand on arrive au dernier message (YOU'RE COOKED)
           clearInterval(timerRef.current);
+          // On attend plus longtemps avant d'afficher HACKED
+          setTimeout(() => {
+            setIsDone(true);
+          }, 2500); // Augmenté à 2.5 secondes
         }
       }
     };
 
+    // Initialiser les lignes au démarrage
+    setDisplayedLines(new Array(messages.length).fill(''));
     timerRef.current = setInterval(typeWriter, 30);
 
     return () => {
@@ -147,17 +175,6 @@ export default function Success() {
     }
   };
 
-  // Fonction pour adapter la taille du texte ASCII
-  const getASCIIArtSize = () => {
-    if (dimensions.width < 640) {
-      return 'text-[6px]';
-    } else if (dimensions.width < 768) {
-      return 'text-[8px]';
-    } else {
-      return 'text-xs md:text-sm';
-    }
-  };
-
   return (
     <div className="fixed inset-0 bg-black text-green-500 font-mono text-base md:text-lg overflow-hidden">
       <canvas
@@ -168,7 +185,7 @@ export default function Success() {
       <div className="relative z-10 w-full h-full flex items-center justify-center p-4">
         <div className="border border-green-500 p-4 md:p-8 w-full max-w-xl text-center bg-black bg-opacity-90">
           <div className="mb-4 md:mb-6 text-green-400 whitespace-pre-wrap text-left text-sm md:text-base">
-            {text}
+            {displayedLines.join('\n')}
           </div>
           {isDone && !isRedirecting && (
             <>
@@ -176,8 +193,8 @@ export default function Success() {
 {`'##::::'##::::'###:::::'######::'##:::'##:'########:'########::
  ##:::: ##:::'## ##:::'##... ##: ##::'##:: ##.....:: ##.... ##:
  ##:::: ##::'##:. ##:: ##:::..:: ##:'##::: ##::::::: ##:::: ##:
- #########:'##:::. ##: ##::::::: #####:::: ######::: ##::::::::
- ##.... ##: #########: ##::::::: ##. ##::: ##...:::: ##::::::::
+ #########:'##:::. ##: ##::::::: #####:::: ######::: ##:::::##:
+ ##.... ##: #########: ##::::::: ##. ##::: ##...:::: ##:::::##:
  ##:::: ##: ##.... ##: ##::: ##: ##:. ##:: ##::::::: ##:::: ##:
  ##:::: ##: ##:::: ##:. ######:: ##::. ##: ########: ########::
 ..:::::..::..:::::..:::......:::..::::..::........::........:::`}</pre>
@@ -185,15 +202,16 @@ export default function Success() {
                 HACK SUCCESSFUL
               </h1>
               <div className="mt-4 md:mt-6 space-y-2 md:space-y-3 text-left text-sm md:text-base">
-                <p className="text-green-400">Données volées avec succès :</p>
+                <p className="text-green-400">Data stolen hehe ( you're cooked ) :</p>
                 <ul className="list-disc list-inside text-green-300">
-                  <li>Historique de recherche (très intéressant...)</li>
-                  <li>Photos de vacances (plutôt embarrassant...)</li>
-                  <li>Messages privés (on ne jugera pas...)</li>
-                  <li>Historique des devoirs non rendus (oups...)</li>
+                  <li>Search history (😐very interesting...)</li>
+                  <li>Private photos (🤭quite embarrassing...)</li>
+                  <li>Private messages (😲we won't judge...)</li>
+                  <li>History of undone homework (😬)</li>
                 </ul>
+                
                 <p className="text-green-400 mt-2 md:mt-4">
-                  Vente à Omnes Education en cours...
+                  Selling to Omnes Education in progress...💵
                 </p>
                 {/* Desktop instruction */}
                 <p className="hidden md:block text-center mt-4 md:mt-6">
@@ -205,7 +223,7 @@ export default function Success() {
                     onClick={handleRedirection}
                     className="border border-green-500 px-6 py-2 text-green-300 hover:bg-green-500 hover:text-black transition-colors"
                   >
-                    Accepter votre sort
+                    Accept your fate
                   </button>
                 </div>
               </div>
@@ -216,7 +234,7 @@ export default function Success() {
               !!! ALERTE !!!
               <br />
               <span className="text-sm md:text-base">
-                Redirection vers nos partenaires...
+                Rederecting to our parteners...
               </span>
             </div>
           )}
