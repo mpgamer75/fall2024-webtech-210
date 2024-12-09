@@ -19,7 +19,7 @@ Cette application web permet de crypter et de décrypter des messages ou des doc
 
 ---
 
-## Installation et Lancement
+## Installation et Lancement dans un environnement local
 
 ```bash
 # Cloner le projet
@@ -42,30 +42,30 @@ L'application sera accessible à l'adresse : [https://fall2024-webtech-210-saber
 
 ---
 
-## Mode d'Emploi
+## :open_book:Mode d'Emploi
 
-### Crypter un message
+### 🔐Crypter un message
 1. Accédez à l'onglet **Crypter**.
 2. Entrez votre message dans le champ de texte.
 3. Choisissez une clé de cryptage.
 4. Cliquez sur le bouton **Crypter**.
 5. Copiez le message crypté ou partagez-le directement.
 
-### Décrypter un message
+### 🔓Décrypter un message
 1. Accédez à l'onglet **Décrypter**.
 2. Collez le message crypté dans le champ de texte.
 3. Entrez la clé de décryptage.
 4. Cliquez sur le bouton **Décrypter**.
 5. Visualisez le message original.
 
-### Paramètres
+### :gear:Paramètres
 - Basculez entre le mode clair et sombre dans l'onglet **Paramètres**.
 - Personnalisez vos préférences d'affichage.
 - Accédez à l'historique des messages (si activé).
 
 ---
 
-## Liens Utiles
+## :link:Liens Utiles
 - [Documentation Next.js](https://nextjs.org/docs)
 - [Documentation Tailwind CSS](https://tailwindcss.com/docs)
 - [Guide de Cryptographie](https://cpge-paradise.com/TIPE/HamzaAzzouzi/PPTAzzouzi.pdf)
