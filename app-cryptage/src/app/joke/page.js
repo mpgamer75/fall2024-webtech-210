@@ -16,7 +16,7 @@ export default function Joke() {
       audioRef.current = new Audio(soundFile);
       audioRef.current.volume = 1.0;
       audioRef.current.play();
-    }, 1000);
+    },500);
 
     return () => {
       clearTimeout(timer);
