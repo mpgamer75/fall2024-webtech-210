@@ -1,5 +1,5 @@
 'use client';
-import { Settings, Bell, Shield, Moon, Skull, Sun, Globe } from 'lucide-react';
+import { Settings, Bell, User, Moon, Skull, Sun, Globe } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -83,17 +83,19 @@ export default function SettingsPage() {
              />
            </div>
 
-           {/* Double authentification */}
+           {/* Éditer le compte */}
            <div className="flex items-center justify-between">
-             <div className="flex items-center gap-2">
-               <Shield className="dark:text-white text-gray-900" size={20} />
-               <span className="dark:text-white text-gray-900">Double authentification</span>
-             </div>
-             <ToggleSwitch
-               checked={twoFactor}
-               onChange={() => setTwoFactor(!twoFactor)}
-             />
-           </div>
+              <div className="flex items-center gap-2">
+                <User className="dark:text-white text-gray-900" size={20} />
+                <span className="dark:text-white text-gray-900">Éditer le compte</span>
+              </div>
+              <button
+                //onClick={handleEditAccount}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+              >
+                Modifier
+              </button>
+            </div>
 
            {/* Ne pas toucher */}
            <div className="flex items-center justify-between">

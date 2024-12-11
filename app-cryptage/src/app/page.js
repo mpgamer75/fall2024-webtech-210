@@ -1,6 +1,5 @@
 'use client';
 
-
 import Logo from './components/Logo';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { 
@@ -10,17 +9,37 @@ import {
   FaGithub 
 } from 'react-icons/fa';
 import { RiTwitterXFill } from 'react-icons/ri';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export default function HomePage() {
+  const [news, setNews] = useState([]);
+  
+  // Utiliser l'API NewsAPI pour récupérer les dernières nouvelles
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const response = await axios.get('https://newsapi.org/v2/top-headlines', {
+          params: {
+            country: 'fr', // Changer le pays si nécessaire
+            apiKey: '02fd96fe6cd14c12b8046e3fcfe99a86' // Remplacez par votre clé API
+          }
+        });
+        setNews(response.data.articles); // Stocke les nouvelles dans l'état
+      } catch (error) {
+        console.error('Erreur lors de la récupération des actualités:', error);
+      }
+    };
+    
+    fetchNews();
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
-      
-
       <main className="flex-grow pt-16">
         {/* Hero Section */}
         <div className="min-h-[calc(100vh-4rem)] py-8 sm:py-12 lg:py-16 px-4 overflow-hidden">
           <div className="max-w-[1920px] mx-auto text-center">
-            {/* Logo et titre centrés */}
             <div className="mb-8 sm:mb-12 animate-fade-in flex flex-col items-center">
               <div className="mb-4">
                 <Logo size="large" />
@@ -108,30 +127,30 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Statistiques Section */}
-        <div className="bg-gray-100 dark:bg-gray-800 py-12 sm:py-16">
+      
+        {/* Actualités Section */}
+        <div className="bg-gray-200 dark:bg-gray-900 py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { number: "10M+", label: "Utilisateurs" },
-                { number: "99.9%", label: "Disponibilité" },
-                { number: "24/7", label: "Support" },
-                { number: "150+", label: "Pays" }
-              ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-red-800 dark:text-red-400 mb-2">
-                    {stat.number}
-                  </div>
-                  <div className="text-gray-600 dark:text-gray-300">
-                    {stat.label}
-                  </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+              Dernières Actualités
+            </h2>
+            <div className="space-y-6">
+              {news.length > 0 ? news.map((article, index) => (
+                <div key={index} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{article.title}</h3>
+                  <p className="text-gray-700 dark:text-gray-300">{article.description}</p>
+                  <a href={article.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                    Lire la suite
+                  </a>
                 </div>
-              ))}
+              )) : (
+                <p className="text-gray-600 dark:text-gray-300">Chargement des actualités...</p>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Section CTA */}
+        {/* CTA Section */}
         <div className="bg-white dark:bg-gray-900 py-16 sm:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-8">
@@ -284,17 +303,7 @@ export default function HomePage() {
               <div>
                 © {new Date().getFullYear()} SABER. Tous droits réservés.
               </div>
-              <div className="flex space-x-4">
-                <a href="/privacy" className="hover:text-white transition-colors duration-300">
-                  Politique de confidentialité
-                </a>
-                <a href="/terms" className="hover:text-white transition-colors duration-300">
-                  Conditions d'utilisation
-                </a>
-                <a href="/legal" className="hover:text-white transition-colors duration-300">
-                  Mentions légales
-                </a>
-              </div>
+              <div className="text-gray-400">CGU | Politique de confidentialité</div>
             </div>
           </div>
         </div>
