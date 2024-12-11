@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import soundFile from '../../../public/sounds/sonDune.mp3';
 
 export default function Success() {
   const router = useRouter();
@@ -13,8 +14,8 @@ export default function Success() {
   const timerRef = useRef(null);
   const messageIndexRef = useRef(0);
   const charIndexRef = useRef(0);
+  const audioRef = useRef(null);
 
-  // Fonction pour adapter la taille du texte ASCII
   const getASCIIArtSize = () => {
     if (dimensions.width < 640) {
       return 'text-[6px]';
@@ -25,7 +26,38 @@ export default function Success() {
     }
   };
 
-  // Gestion des dimensions de l'écran
+  useEffect(() => {
+    let isComponentMounted = true;
+  
+    const initAudio = async () => {
+      try {
+        audioRef.current = new Audio(soundFile);
+        audioRef.current.volume = 1.0;
+        
+        // Vérifie si le composant est toujours monté avant de jouer
+        if (isComponentMounted) {
+          await audioRef.current.play();
+        }
+      } catch (error) {
+        // Gère silencieusement l'erreur si le composant est démonté
+        if (isComponentMounted) {
+          console.error('Error playing audio:', error);
+        }
+      }
+    };
+  
+    initAudio();
+  
+    // Cleanup function
+    return () => {
+      isComponentMounted = false;
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
   useEffect(() => {
     const updateDimensions = () => {
       if (typeof window !== 'undefined') {
@@ -41,7 +73,6 @@ export default function Success() {
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
-  // Animation Matrix
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -98,17 +129,16 @@ export default function Success() {
     };
   }, []);
 
-  // Animation de texte améliorée
   useEffect(() => {
     const messages = [
       "> INITIALIZING HACK.EXE ...",
       "> SUCCESSFULLY CONNECTED ...",
-      "> INITIATING SCAN ...",
+      "> INITIATING SCAN ON NMAP ...",
       "> FETCHING DATA ...",
       "> DONE ( YOU'RE COOKED )"
     ];
 
-    const typeWriter = () => {
+    const typeWriter = () => { // fonction pour écrire notre texte 
       const message = messages[messageIndexRef.current];
       
       if (!displayedLines[messageIndexRef.current]) {
@@ -132,29 +162,25 @@ export default function Success() {
           charIndexRef.current = 0;
           clearInterval(timerRef.current);
           setTimeout(() => {
-            timerRef.current = setInterval(typeWriter, 30);
-          }, 1000); // Délai entre les messages
+            timerRef.current = setInterval(typeWriter, 100);
+          }, 2000);
         } else {
-          // Quand on arrive au dernier message (YOU'RE COOKED)
           clearInterval(timerRef.current);
-          // On attend plus longtemps avant d'afficher HACKED
           setTimeout(() => {
             setIsDone(true);
-          }, 2500); // Augmenté à 2.5 secondes
+          }, 2500);
         }
       }
     };
 
-    // Initialiser les lignes au démarrage
     setDisplayedLines(new Array(messages.length).fill(''));
-    timerRef.current = setInterval(typeWriter, 30);
+    timerRef.current = setInterval(typeWriter, 100);
 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, []);
 
-  // Gestion des événements clavier et tactiles
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (isDone && !isRedirecting && event.key === 'Enter') {
@@ -213,11 +239,9 @@ export default function Success() {
                 <p className="text-green-400 mt-2 md:mt-4">
                   Selling to Omnes Education in progress...💵
                 </p>
-                {/* Desktop instruction */}
                 <p className="hidden md:block text-center mt-4 md:mt-6">
                   Appuyez sur <span className="text-green-300 border border-green-500 px-2">[ENTER]</span> pour accepter votre sort
                 </p>
-                {/* Mobile button */}
                 <div className="md:hidden flex justify-center mt-4">
                   <button
                     onClick={handleRedirection}
@@ -234,7 +258,7 @@ export default function Success() {
               !!! ALERTE !!!
               <br />
               <span className="text-sm md:text-base">
-                Rederecting to our parteners...
+                Redirecting to our partners...
               </span>
             </div>
           )}

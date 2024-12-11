@@ -2,12 +2,31 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import soundFile from '../../../public/sounds/son.mp3';
 
 export default function Joke() {
   const router = useRouter();
   const canvasRef = useRef(null);
+  const audioRef = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
+  // Gestion du son
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      audioRef.current = new Audio(soundFile);
+      audioRef.current.volume = 1.0;
+      audioRef.current.play();
+    },500);
+
+    return () => {
+      clearTimeout(timer);
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, []);
+
+  // Gestion des touches
   const handleKeyPress = (event) => {
     if (event.key.toLowerCase() === 'y') {
       router.push('/success');
@@ -16,7 +35,7 @@ export default function Joke() {
     }
   };
 
-  // Gestionnaire tactile pour les appareils mobiles
+  // Gestion tactile
   const handleTouch = (option) => {
     if (option === 'yes') {
       router.push('/success');
@@ -25,6 +44,7 @@ export default function Joke() {
     }
   };
 
+  // Effet Matrix
   useEffect(() => {
     const updateDimensions = () => {
       if (typeof window !== 'undefined') {
@@ -35,9 +55,7 @@ export default function Joke() {
       }
     };
 
-    // Initial dimensions
     updateDimensions();
-
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
@@ -55,7 +73,6 @@ export default function Joke() {
 
     const chars = "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const charArray = chars.split('');
-    // Ajuster la taille de la police en fonction de la largeur de l'écran
     const fontSize = Math.max(10, Math.min(14, window.innerWidth / 50));
     let columns = Math.floor(canvas.width / fontSize);
     let drops = Array(columns).fill(1);
@@ -97,15 +114,13 @@ export default function Joke() {
     };
   }, []);
 
-  // Adapter la taille du texte ASCII en fonction de la largeur de l'écran
   const getASCIIArtSize = () => {
-    if (dimensions.width < 640) { // mobile
+    if (dimensions.width < 640) {
       return 'text-[8px]';
-    } else if (dimensions.width < 768) { // tablet
+    } else if (dimensions.width < 768) {
       return 'text-xs';
-    } else {
-      return 'text-sm';
     }
+    return 'text-sm';
   };
 
   return (
@@ -134,7 +149,6 @@ export default function Joke() {
             Select option
           </h1>
           <div className="mt-4 md:mt-8 space-y-4">
-            {/* Boutons tactiles pour mobile */}
             <div className="md:hidden flex justify-center space-x-4">
               <button
                 onClick={() => handleTouch('yes')}
@@ -149,7 +163,6 @@ export default function Joke() {
                 No
               </button>
             </div>
-            {/* Instructions clavier pour desktop */}
             <div className="hidden md:block space-y-2">
               <p className="text-green-400">
                 Press <span className="text-green-300 border border-green-500 px-2">[Y]</span> to proceed
