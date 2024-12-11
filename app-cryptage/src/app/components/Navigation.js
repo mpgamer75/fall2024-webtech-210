@@ -11,19 +11,24 @@ import {
   LogIn,
   LogOut,
   User,
+  X as XIcon
 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getsuggestion_de_requetes, searchCryptoNews } from '../API/cryptopanicService';
+import { useRouter } from 'next/navigation';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const searchRef = useRef(null);
+
+  const router = useRouter();
 
   const links = [
     { href: '/', icon: Home, text: 'Accueil' },
@@ -73,6 +78,7 @@ const Navigation = () => {
   const handleSearch = async (query) => {
     setShowSuggestions(false);
     setSearchQuery(query);
+    setIsSearchOpen(false);
     const results = await searchCryptoNews(query);
     setSearchResults(results);
     window.location.href = `/search?q=${encodeURIComponent(query)}`;
@@ -83,11 +89,24 @@ const Navigation = () => {
     setUser(null);
     window.location.href = '/';
   };
+ 
+  const toggleSearch = () => {
+    setIsSearchOpen(!isSearchOpen);  
+    if (isMenuOpen) setIsMenuOpen(false);  // Ferme le menu si ouvert
+    // Focus sur l'input de recherche après ouverture
+    if (!isSearchOpen) {
+      setTimeout(() => {
+        const searchInput = document.querySelector('input[type="text"]');
+        if (searchInput) searchInput.focus();
+      }, 100);
+    }
+  };
 
   return (
-    <nav className="bg-gray-600 text-white shadow-lg">
+    <nav className="bg-gray-600 text-white shadow-lg relative">
       <div className="max-w-[1920px] mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
+          {/* Logo et titre */}
           <div className="flex items-center">
             <img
               src="/logo-app3.png"
@@ -101,20 +120,27 @@ const Navigation = () => {
               SABER
             </span>
           </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
+  
+          {/* Actions téléphone */}
+          <div className="md:hidden flex items-center space-x-2">
+            <button
+              onClick={toggleSearch}
+              className="p-2 rounded-md hover:bg-red-800 focus:outline-none transition-colors duration-300"
+              aria-label="Recherche"
+            >
+              <Search size={24} />
+            </button>
             <button
               onClick={() => setIsMenuOpen((prev) => !prev)}
-              className="inline-flex items-center justify-center p-2 rounded-md hover:bg-red-800 focus:outline-none"
+              className="p-2 rounded-md hover:bg-red-800 focus:outline-none transition-colors duration-300"
               aria-label="Menu"
               aria-expanded={isMenuOpen}
             >
               <Menu size={24} />
             </button>
           </div>
-
-          {/* Desktop Links */}
+  
+          {/* Navigation Desktop */}
           <div className="hidden md:flex items-center justify-between flex-1 ml-10">
             <div className="flex items-center space-x-4">
               {links.map(({ href, icon: Icon, text }) => (
@@ -130,8 +156,9 @@ const Navigation = () => {
                 </a>
               ))}
             </div>
-
+  
             <div className="flex items-center space-x-4">
+              {/* Barre de recherche desktop */}
               <div className="relative hidden lg:block" ref={searchRef}>
                 <input
                   type="text"
@@ -146,7 +173,7 @@ const Navigation = () => {
                     hover:bg-red-800 focus:bg-red-900"
                 />
                 <Search className="absolute right-3 top-2.5 text-orange-200 pointer-events-none" size={20} />
-
+  
                 {showSuggestions && suggestions.length > 0 && (
                   <div className="absolute z-50 w-full mt-1 bg-gray-700 rounded-md shadow-lg overflow-hidden">
                     {suggestions.map((suggestion, index) => (
@@ -161,7 +188,8 @@ const Navigation = () => {
                   </div>
                 )}
               </div>
-
+  
+              {/* Info utilisateur */}
               {user && (
                 <div className="flex items-center space-x-2 px-3 py-2 rounded-md bg-gray-700">
                   <User size={20} className="text-green-400" />
@@ -170,7 +198,8 @@ const Navigation = () => {
                   </span>
                 </div>
               )}
-
+  
+              {/* Bouton paramètres */}
               <a
                 href="/settings"
                 className="group flex items-center space-x-2 px-3 py-2 rounded-md
@@ -180,7 +209,8 @@ const Navigation = () => {
                 <Settings size={20} className="transform transition-transform duration-300 group-hover:scale-110" />
                 <span className="transition-colors duration-300 hidden lg:inline">Paramètres</span>
               </a>
-
+  
+              {/* Bouton connexion/déconnexion */}
               {user ? (
                 <button
                   onClick={handleLogout}
@@ -204,10 +234,55 @@ const Navigation = () => {
           </div>
         </div>
       </div>
-
-      {/* Mobile Menu */}
+  
+      {/* Barre de recherche mobile */}
+      <div className={`
+        absolute top-full left-0 right-0 bg-gray-700 
+        transform transition-all duration-300 z-50
+        ${isSearchOpen ? 'h-16 opacity-100' : 'h-0 opacity-0 pointer-events-none'}
+      `}>
+        <div className="container mx-auto px-4 py-3 flex items-center">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            onFocus={() => setShowSuggestions(true)}
+            placeholder="Rechercher..."
+            className="flex-1 bg-gray-600 text-white placeholder-gray-300 
+              px-4 py-2 rounded-md
+              focus:outline-none focus:ring-2 focus:ring-red-800
+              transition-all duration-300"
+          />
+          <button
+            onClick={toggleSearch}
+            className="ml-3 p-2 hover:bg-red-800 rounded-md transition-colors duration-300"
+          >
+            <XIcon size={20} />
+          </button>
+  
+          {showSuggestions && suggestions.length > 0 && (
+            <div className="absolute left-4 right-4 top-full mt-1 bg-gray-700 rounded-md shadow-lg overflow-hidden z-50">
+              {suggestions.map((suggestion, index) => (
+                <div
+                  key={index}
+                  className="px-4 py-2 cursor-pointer text-white hover:bg-red-800 transition-colors"
+                  onClick={() => {
+                    handleSearch(suggestion);
+                    setIsSearchOpen(false);
+                    setShowSuggestions(false);
+                  }}
+                >
+                  {suggestion}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+  
+      {/* Menu mobile */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 right-0 bg-gray-600 shadow-lg z-50">
+        <div className="md:hidden absolute top-16 left-0 right-0 bg-gray-600 shadow-lg z-40">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {user && (
               <div className="flex items-center space-x-2 px-3 py-2 rounded-md bg-gray-700 mb-2">
@@ -227,7 +302,7 @@ const Navigation = () => {
                 <span>{text}</span>
               </a>
             ))}
-
+  
             <a
               href="/settings"
               className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-red-800 
@@ -237,6 +312,7 @@ const Navigation = () => {
               <Settings size={20} />
               <span>Paramètres</span>
             </a>
+  
             {user ? (
               <button
                 onClick={() => {
@@ -266,6 +342,4 @@ const Navigation = () => {
     </nav>
   );
 };
-
 export default Navigation;
-
