@@ -12,12 +12,18 @@ import {
   LogOut,
   User,
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
+import { getsuggestion_de_requetes, searchCryptoNews } from '../API/cryptopanicService';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+  const searchRef = useRef(null);
 
   const links = [
     { href: '/', icon: Home, text: 'Accueil' },
@@ -43,8 +49,34 @@ const Navigation = () => {
     return () => {
       subscription.data?.subscription?.unsubscribe?.();
     };
-
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    const newSuggestions = getsuggestion_de_requetes(value);
+    setSuggestions(newSuggestions);
+    setShowSuggestions(true);
+  };
+
+  const handleSearch = async (query) => {
+    setShowSuggestions(false);
+    setSearchQuery(query);
+    const results = await searchCryptoNews(query);
+    setSearchResults(results);
+    window.location.href = `/search?q=${encodeURIComponent(query)}`;
+  };
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -56,24 +88,21 @@ const Navigation = () => {
     <nav className="bg-gray-600 text-white shadow-lg">
       <div className="max-w-[1920px] mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo et Marque */}
           <div className="flex items-center">
             <img
               src="/logo-app3.png"
               alt="Logo"
               className="h-8 w-auto transform transition-all duration-300 hover:scale-110"
             />
-            <span
-              className="ml-2 font-bold text-xl md:text-2xl bg-gradient-to-r from-red-800 to-white 
-                bg-clip-text text-transparent transform transition-all duration-300 
-                hover:tracking-wider hover:scale-105 cursor-pointer
-                drop-shadow-[0_2px_1px_rgba(0,0,0,0.3)]"
-            >
+            <span className="ml-2 font-bold text-xl md:text-2xl bg-gradient-to-r from-red-800 to-white 
+              bg-clip-text text-transparent transform transition-all duration-300 
+              hover:tracking-wider hover:scale-105 cursor-pointer
+              drop-shadow-[0_2px_1px_rgba(0,0,0,0.3)]">
               SABER
             </span>
           </div>
 
-          {/* Bouton Menu Mobile */}
+          {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen((prev) => !prev)}
@@ -85,7 +114,7 @@ const Navigation = () => {
             </button>
           </div>
 
-          {/* Navigation Desktop */}
+          {/* Desktop Links */}
           <div className="hidden md:flex items-center justify-between flex-1 ml-10">
             <div className="flex items-center space-x-4">
               {links.map(({ href, icon: Icon, text }) => (
@@ -102,11 +131,13 @@ const Navigation = () => {
               ))}
             </div>
 
-            {/* Barre de recherche, paramètres et Connexion/Déconnexion */}
             <div className="flex items-center space-x-4">
-              <div className="relative hidden lg:block">
+              <div className="relative hidden lg:block" ref={searchRef}>
                 <input
                   type="text"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  onFocus={() => setShowSuggestions(true)}
                   placeholder="Rechercher..."
                   className="bg-gray-500 text-white placeholder-gray-300 
                     px-4 py-2 rounded-md w-48
@@ -115,6 +146,20 @@ const Navigation = () => {
                     hover:bg-red-800 focus:bg-red-900"
                 />
                 <Search className="absolute right-3 top-2.5 text-orange-200 pointer-events-none" size={20} />
+
+                {showSuggestions && suggestions.length > 0 && (
+                  <div className="absolute z-50 w-full mt-1 bg-gray-700 rounded-md shadow-lg overflow-hidden">
+                    {suggestions.map((suggestion, index) => (
+                      <div
+                        key={index}
+                        className="px-4 py-2 cursor-pointer text-white hover:bg-red-800 transition-colors"
+                        onClick={() => handleSearch(suggestion)}
+                      >
+                        {suggestion}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {user && (
@@ -160,7 +205,7 @@ const Navigation = () => {
         </div>
       </div>
 
-      {/* Menu Mobile */}
+      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden absolute top-16 left-0 right-0 bg-gray-600 shadow-lg z-50">
           <div className="px-2 pt-2 pb-3 space-y-1">
@@ -182,6 +227,7 @@ const Navigation = () => {
                 <span>{text}</span>
               </a>
             ))}
+
             <a
               href="/settings"
               className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-red-800 
@@ -222,3 +268,4 @@ const Navigation = () => {
 };
 
 export default Navigation;
+
