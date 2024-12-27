@@ -158,27 +158,48 @@ const EncryptForm = () => {
     }
   };
   // Génération de clé aléatoire
-  const generateRandomKey = () => {
+  const generateRandomKey = async () => {
     setIsLoading(true);
     try {
       let key = '';
+
       if (formData.method === 'BTOA64' || formData.method === 'AES') {
         // Génération de clé pour AES
         const keySize = formData.method === 'AES' ? 32 : 16;
         const wordArray = CryptoJS.lib.WordArray.random(keySize);
         key = CryptoJS.enc.Base64.stringify(wordArray);
+        setFormData(prev => ({ ...prev, key }));
       } else if (formData.method === 'RSA') {
         // Génération de paire de clés RSA
         const JSEncrypt = require('jsencrypt').default;
-        const encrypt = new JSEncrypt({ default_key_size: 2048 });
-        encrypt.getKey();
-        key = encrypt.getPublicKey();
-        setKeyPair({
-          publicKey: encrypt.getPublicKey(),
-          privateKey: encrypt.getPrivateKey()
+        const encrypt = new JSEncrypt({ 
+          default_key_size: 4096 // On utilise au final une taille de clé à 4096 bits ( même si le coût en compléxité augmente vis à vis du processeur, la sécurité face aux attaques elle augmente)
         });
+  
+        // Génération asynchrone des clés pour éviter le blocage de l'interface
+        await new Promise(resolve => {
+          setTimeout(() => {
+            encrypt.getKey();
+            resolve();
+          }, 100);
+        });
+  
+        // Récupération des clés
+        const publicKey = encrypt.getPublicKey();
+        const privateKey = encrypt.getPrivateKey();
+
+        if (!publicKey || !privateKey) {
+          throw new Error('Échec de la génération des clés RSA');
+        }
+  
+        // Mise à jour de l'état avec les nouvelles clés
+        key = publicKey;
+        setKeyPair({
+          publicKey,
+          privateKey
+        });
+        setFormData(prev => ({ ...prev, key: publicKey }));
       }
-      setFormData(prev => ({ ...prev, key }));
     } catch (error) {
       setErrors(prev => ({ 
         ...prev, 
@@ -188,7 +209,6 @@ const EncryptForm = () => {
       setIsLoading(false);
     }
   };
-
   // Gestion de la copie dans le presse-papiers
   const copyToClipboard = async () => {
     try {
@@ -364,7 +384,7 @@ const EncryptForm = () => {
 
           {/* Section clé de cryptage (conditionnelle/ l'utilisateur peut créer sa propre clé) */}
           {formData.method !== 'BTOA64' && (
-            <div className="flex gap-4 flex-col sm:flex-row">
+            <div className="flex gap-4 flex-col">
               <div className="flex-1">
                 <label className="block mb-2 font-medium">
                   {formData.method === 'RSA' ? 'Clé publique' : 'Clé de cryptage'}
@@ -387,6 +407,25 @@ const EncryptForm = () => {
                   <p className="text-red-500 text-sm mt-1">{errors.key}</p>
                 )}
               </div>
+
+              {/* Affichage de la clé privée pour RSA */}
+              {formData.method === 'RSA' && keyPair && (
+                <div className="flex-1">
+                  <label className="block mb-2 font-medium">
+                    Clé privée (à conserver précieusement)
+                  </label>
+                  <textarea
+                    value={keyPair.privateKey}
+                    readOnly
+                    className={`w-full p-4 border rounded-lg h-32 resize-none
+                      ${theme === 'dark' ? 'bg-gray-700 text-white border-gray-600' : 'bg-gray-50 border-gray-300'}
+                    `}
+                  />
+                  <p className="text-sm text-yellow-500 mt-1">
+                    ⚠️ Cette clé privée est nécessaire pour le déchiffrement. Conservez-la en lieu sûr.
+                  </p>
+                </div>
+              )}
               
               {/* Bouton de génération de clé */}
               <button
