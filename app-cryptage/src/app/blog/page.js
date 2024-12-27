@@ -18,7 +18,7 @@ export default function BlogPage() {
 
     const fetchUserAndPosts = async () => {
       try {
-        // 1. Récupérer la session utilisateur
+        
         const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         if (sessionError) throw sessionError;
         
@@ -26,7 +26,7 @@ export default function BlogPage() {
           setUser(session?.user || null);
         }
 
-        // 2. Récupérer les posts
+        
         const { data: postsData, error: postsError } = await supabase
           .from('posts')
           .select('*')
@@ -36,21 +36,21 @@ export default function BlogPage() {
 
         if (!mounted) return;
 
-        // 3. Enrichir chaque post avec les likes et commentaires
+        
         const enrichedPosts = await Promise.all(postsData.map(async (post) => {
-          // Compter les likes
+          // Compte les likes
           const { count: likesCount } = await supabase
             .from('likes')
             .select('*', { count: 'exact', head: true })
             .eq('post_id', post.id);
 
-          // Compter les commentaires
+          // Compte les commentaires
           const { count: commentsCount } = await supabase
             .from('comments')
             .select('*', { count: 'exact', head: true })
             .eq('post_id', post.id);
 
-          // Vérifier si l'utilisateur a liké
+          // Vérifie si l'utilisateur a liké
           let userHasLiked = false;
           if (session?.user) {
             const { data: userLike } = await supabase
@@ -205,7 +205,7 @@ export default function BlogPage() {
 
       if (error) throw error;
 
-      // Ajouter le nouveau post avec les compteurs initialisés
+      // Ajoute le nouveau post avec les compteurs initialisés
       setPosts(currentPosts => [{
         ...data,
         likes_count: 0,
@@ -221,7 +221,7 @@ export default function BlogPage() {
     }
   };
 
-  // Composant pour afficher un message d'erreur
+  
   const ErrorMessage = () => (
     <div className="bg-red-500/10 border border-red-500 text-red-500 rounded-md p-4 my-4">
       <p>Une erreur est survenue lors du chargement des posts. Veuillez réessayer plus tard.</p>

@@ -2,7 +2,7 @@
 
 import { Upload } from "lucide-react";
 
- // on définit d'abord les fonctions que l'on utilisera plus tard dans le code 
+
  
 const FileUploadButton =({onFileSelect, acceptTypes = ".txt,.pdf"})=>{
     const handleFileChange = (event) => {
