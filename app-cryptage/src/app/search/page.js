@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { searchCryptoNews } from '../API/cryptopanicService'; 
 
+
+
 export default function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q');
