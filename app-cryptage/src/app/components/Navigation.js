@@ -92,7 +92,7 @@ const Navigation = () => {
  
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);  
-    if (isMenuOpen) setIsMenuOpen(false);  // Ferme le menu si ouvert
+    if (isMenuOpen) setIsMenuOpen(false);  
     // Focus sur l'input de recherche après ouverture
     if (!isSearchOpen) {
       setTimeout(() => {
