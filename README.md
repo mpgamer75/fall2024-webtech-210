@@ -5,7 +5,8 @@ Cette application de blog permet aux utilisateurs de créer, modifier et partage
 
 ## Déploiement
 - **Application** : [fall2024-webtech-210-saber11.vercel.app](https://fall2024-webtech-210-saber11.vercel.app/)
-- **Base de données** : [Projet Supabase](https://mljwwromhlvzxeweayoa.supabase.co)
+- **Base de données** : - **Base de données** : [Projet Supabase](https://mljwwromhlvzxeweayoa.supabase.co)
+
 
 ## Fonctionnalités
 - 🔐 Chiffrement et déchiffrement de documents et de texte ( Base64, AES et RSA 4096)
