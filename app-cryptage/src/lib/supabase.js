@@ -11,7 +11,6 @@ console.log('Variables Supabase:', {
   fullKey: supabaseKey?.substring(0, 10) + '...'
 })*/
 
-// Pour Docker 
 
 if(!supabaseUrl || !supabaseKey){
   throw new Error('Variables d\'environnement Supabase manquantes');
