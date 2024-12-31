@@ -10,7 +10,7 @@ const DecryptForm = () => {
   const [formData, setFormData] = useState({
     encryptedText: '',
     key: '',
-    method: 'BTOA64' // Méthode par défaut pour l'instant
+    method: 'BTOA64' 
   });
   const [errors, setErrors] = useState({});
   const [decryptedText, setDecryptedText] = useState('');
@@ -315,9 +315,3 @@ const DecryptForm = () => {
 };
 
 export default DecryptForm;
-
-// dans cette nouvelle version on a jouter la possibilité à l'utilisateur de choisir sa méthode de décryptage ( en fonction de la nature de cryptage qu'il a choisit )
-
-// utilistation de "isLoading" comme pour le formulaire de cryptage 
-
-// un support de fichier JSON pour RSA car il y a une clé public et une clé privé ( trouver en ligne )

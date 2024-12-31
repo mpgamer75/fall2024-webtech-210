@@ -19,7 +19,7 @@ const EncryptForm = () => {
   const [showResult, setShowResult] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [keyPair, setKeyPair] = useState(null);
-  const [fileName, setFileName] = useState(''); // Nous permet d'afficher le nom du fichier 
+  const [fileName, setFileName] = useState(''); 
 
   // Fonction pour lire un fichier texte
   const readTextFile = (file) => {
@@ -139,7 +139,7 @@ const EncryptForm = () => {
       encrypt.setPublicKey(formData.key);
   
       // Fonction pour découper le texte en morceaux de taille maximale
-      const chunkSize = 100; // Taille sécurisée pour RSA 2048 bits ( on va modifier pour aller au oins à 4086 bits)
+      const chunkSize = 100; 
       const chunks = text.match(new RegExp(`.{1,${chunkSize}}`, 'g')) || [];
       
       // Chiffre chaque morceau
@@ -173,7 +173,7 @@ const EncryptForm = () => {
         // Génération de paire de clés RSA
         const JSEncrypt = require('jsencrypt').default;
         const encrypt = new JSEncrypt({ 
-          default_key_size: 4096 // On utilise au final une taille de clé à 4096 bits ( même si le coût en compléxité augmente vis à vis du processeur, la sécurité face aux attaques elle augmente)
+          default_key_size: 4096 
         });
   
         // Génération asynchrone des clés pour éviter le blocage de l'interface

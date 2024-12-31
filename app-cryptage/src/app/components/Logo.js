@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 const Logo = ({ size = 'small' }) => {
-  const [isHovering, setIsHovering] = useState(false); // problème à régler plus tard 🤔
+  const [isHovering, setIsHovering] = useState(false); 
   const dimensions = size === 'large' ? { width: 180, height: 180 } : { width: 40, height: 40 };
   
   return (

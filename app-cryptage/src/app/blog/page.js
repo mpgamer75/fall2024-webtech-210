@@ -44,7 +44,7 @@ export default function BlogPage() {
             .select('*', { count: 'exact', head: true })
             .eq('post_id', post.id);
 
-          // Compte les commentaires
+          // Compte les commentaire
           const { count: commentsCount } = await supabase
             .from('comments')
             .select('*', { count: 'exact', head: true })
