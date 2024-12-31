@@ -20,7 +20,7 @@ const FileUploadButton =({onFileSelect, acceptTypes = ".txt,.pdf"})=>{
             }
           };
     
-          if (file.type === 'application/pdf') { // vérification du type de document
+          if (file.type === 'application/pdf') { 
             reader.readAsArrayBuffer(file);
           } else {
             reader.readAsText(file);
